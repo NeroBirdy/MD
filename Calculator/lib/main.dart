@@ -55,6 +55,7 @@ class _CalculatorState extends State<Calculator> {
         equal();
       } else if (text == 'C') {
         exp = '0';
+        answer = '0';
       } else if (text == 'del') {
         if (exp.length > 1) {
           exp = exp.substring(0, exp.length - 1);
@@ -116,6 +117,7 @@ class _CalculatorState extends State<Calculator> {
   String answer = '0';
   List numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
   List symbols = ['+', '-', '*', '/', '^'];
+  List<String> lastOperation = [];
 
   Widget getButton(String text, Color color) {
     bool t;
@@ -165,11 +167,11 @@ class _CalculatorState extends State<Calculator> {
                   reverse: true,
                   child: Text(
                     exp,
-                    style: const TextStyle(color: Colors.white, fontSize: 60),
+                    style: const TextStyle(color: Colors.white, fontSize: 35),
                     textAlign: TextAlign.right,
                   ),
                 )),
-
+            SizedBox(height: 30 ,),
             Align(
                 alignment: Alignment.centerRight,
                 child: SingleChildScrollView(
@@ -177,7 +179,7 @@ class _CalculatorState extends State<Calculator> {
                   reverse: true,
                   child: Text(
                     '=' + answer,
-                    style: const TextStyle(color: Colors.white, fontSize: 60),
+                    style: const TextStyle(color: Colors.white, fontSize: 45),
                     textAlign: TextAlign.right,
                   ),
                 )),
