@@ -178,7 +178,7 @@ class _CalculatorState extends State<Calculator> {
                   scrollDirection: Axis.horizontal,
                   reverse: true,
                   child: Text(
-                    '=' + answer,
+                    '=$answer',
                     style: const TextStyle(color: Colors.white, fontSize: 45),
                     textAlign: TextAlign.right,
                   ),
