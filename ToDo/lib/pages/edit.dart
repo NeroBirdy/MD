@@ -16,6 +16,7 @@ class _EditState extends State<Edit> {
   ToDoList db = ToDoList();
   TextEditingController controller = TextEditingController();
   String text = '';
+  bool flag = true;
 
   @override
   void initState() {
@@ -27,19 +28,23 @@ class _EditState extends State<Edit> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, int>;
-    
-    if (db.toDo.isNotEmpty) {
-      text = db.toDo[args['index']!][0];
-      controller.text = text;
+
+    if (flag) {
+      final args =
+          ModalRoute.of(context)!.settings.arguments as Map<String, int>;
+
+      if (db.toDo.isNotEmpty) {
+        text = db.toDo[args['index']!][0];
+        controller.text = text;
+      }
+      flag = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map<String, int>;
-    
+
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 157, 101, 194),
         appBar: AppBar(
@@ -98,7 +103,8 @@ class _EditState extends State<Edit> {
                       onPressed: () {
                         db.toDo[args['index']!][0] = text;
                         db.update();
-                        Navigator.pushNamed(context, '/home',arguments: {'routeBefore': 'edit'});
+                        Navigator.pushNamed(context, '/home',
+                            arguments: {'routeBefore': 'edit'});
                       },
                       icon: FaIcon(FontAwesomeIcons.solidCircleCheck))
                 ],
