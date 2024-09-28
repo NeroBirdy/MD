@@ -48,7 +48,7 @@ class _SquareState extends State<Square> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          'Temperature',
+          'Square',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
