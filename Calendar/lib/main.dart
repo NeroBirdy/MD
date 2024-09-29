@@ -140,8 +140,9 @@ class _CalendarState extends State<Calendar> {
         children: days
             .map((item) => Text(
                   item,
-                  style:
-                      TextStyle(color: const Color.fromARGB(255, 245, 179, 93), fontSize: 19),
+                  style: TextStyle(
+                      color: const Color.fromARGB(255, 245, 179, 93),
+                      fontSize: 19),
                 ))
             .toList(),
       );
@@ -207,7 +208,10 @@ class _CalendarState extends State<Calendar> {
             getColor(i, DateTime(selected.year, selected.month + 1), false)));
       }
 
-      return GridView.count(crossAxisCount: 7, children: grid);
+      return GridView.count(
+          crossAxisCount: 7,
+          children: grid,
+          physics: NeverScrollableScrollPhysics());
     }
 
     return Scaffold(
