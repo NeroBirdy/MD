@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 void main() {
-  runApp(const MyApp());
+  initializeDateFormatting('ru_RU', null).then((_) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -48,8 +49,9 @@ class _CalendarState extends State<Calendar> {
 
     Widget getYearAndMonth() {
       String textMonth = DateFormat(
-        'MMMM',
+        'MMMM','ru_RU'
       ).format(selected);
+      textMonth = textMonth[0].toUpperCase() + textMonth.substring(1);
       String textYear = DateFormat(
         'yyyy',
       ).format(selected);
