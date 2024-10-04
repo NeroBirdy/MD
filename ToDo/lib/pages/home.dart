@@ -15,14 +15,15 @@ class _HomeState extends State<Home> {
   ToDoList db = ToDoList();
   List filtered = [];
   Color filterColor = const Color.fromARGB(255, 51, 51, 51);
+   List<bool> full = [];
 
   @override
   void initState() {
-    
     db.loadData();
     print(db.toDo);
 
     filtered = getList();
+    full = List.generate(filtered.length, (index) => false);
 
     super.initState();
   }
@@ -46,6 +47,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 157, 101, 194),
         appBar: AppBar(
@@ -82,71 +84,85 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.all(10),
                     itemCount: filtered.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                          height: 70,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: const Color.fromARGB(72, 103, 56, 134)),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Transform.scale(
-                                      scale: 1.4,
-                                      child: Checkbox(
-                                          side: BorderSide(
-                                              color: const Color.fromARGB(
-                                                  255, 51, 51, 51),
-                                              width: 2),
-                                          value: db.toDo[filtered[index]][1],
-                                          onChanged: (bool? value) {
-                                            setState(() {
-                                              db.toDo[filtered[index]][1] =
-                                                  value;
-                                              db.update();
-                                            });
-                                          }),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 15),
-                                      child: Container(
-                                        constraints: BoxConstraints(
-                                            maxWidth: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.6),
-                                        child: Text(
-                                          db.toDo[filtered[index]][0],
-                                          style: TextStyle(color: Colors.white, fontSize: 16),
+                      
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            full[index] = !full[index];
+                          });
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: const Color.fromARGB(72, 103, 56, 134)),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 15),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Transform.scale(
+                                        scale: 1.4,
+                                        child: Checkbox(
+                                            side: BorderSide(
+                                                color: const Color.fromARGB(
+                                                    255, 51, 51, 51),
+                                                width: 2),
+                                            value: db.toDo[filtered[index]][1],
+                                            onChanged: (bool? value) {
+                                              setState(() {
+                                                db.toDo[filtered[index]][1] =
+                                                    value;
+                                                db.update();
+                                              });
+                                            }),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 15),
+                                        child: Container(
+                                          constraints: BoxConstraints(
+                                              maxWidth: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.6),
+                                          child: IntrinsicHeight(
+                                            child: Text(
+                                              db.toDo[filtered[index]][0],
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16),
+                                              maxLines: full[index] ? null : 3,
+                                              overflow: full[index] ? TextOverflow.visible : TextOverflow.ellipsis,
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      iconSize: 28,
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/edit',
-                                            arguments: <String, int>{
-                                              'index': filtered[index]
-                                            });
-                                      },
-                                      icon: FaIcon(FontAwesomeIcons.edit),
-                                      color:
-                                          const Color.fromARGB(255, 51, 51, 51),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ));
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                        iconSize: 28,
+                                        onPressed: () {
+                                          Navigator.pushNamed(context, '/edit',
+                                              arguments: <String, int>{
+                                                'index': filtered[index]
+                                              });
+                                        },
+                                        icon: FaIcon(FontAwesomeIcons.edit),
+                                        color: const Color.fromARGB(
+                                            255, 51, 51, 51),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )),
+                      );
                     },
                     separatorBuilder: (BuildContext context, int index) =>
                         const SizedBox(
