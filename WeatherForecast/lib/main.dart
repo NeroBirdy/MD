@@ -70,6 +70,10 @@ class _WeatherState extends State<Weather> {
     'Perm'
   ];
 
+  List<bool> full = List.generate(14, (index) {
+    return [0, 1].contains(index) ? true : false;
+  });
+
   @override
   void initState() {
     super.initState();
@@ -91,12 +95,88 @@ class _WeatherState extends State<Weather> {
 
   void jump(int index) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      sc.jumpTo(50.0 * index);
+      sc.jumpTo(47.0 * index);
     });
   }
 
   HugeIcon getIcon(String windDir) {
     return directionIcons[windDir]!;
+  }
+
+  Widget getRow(String label, dynamic data, String windDirection) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+      Expanded(
+          child: Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(label, style: TextStyle(color: Colors.white)))),
+      Expanded(
+          child: Row(children: [
+        Image.network('http:' + data['condition']['icon'], height: 40),
+        Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Text(
+                (data['temp_c'].toString()[0] != '-' ? '+' : '') +
+                    data['temp_c'].toStringAsFixed(0) +
+                    '°',
+                style: TextStyle(color: Colors.white)))
+      ])),
+      Expanded(
+          child: Text((data['wind_kph'] / 3.6).toStringAsFixed(1) +
+              '  m/s, ' +
+              (data['wind_dir'].toString().length == 3
+                  ? data['wind_dir'].substring(1)
+                  : data['wind_dir']) +
+              ' ')),
+      Padding(
+          padding: EdgeInsets.only(right: 10), child: getIcon(windDirection))
+    ]);
+  }
+
+  Widget getCardChildren(Map data) {
+    int index = data['index'];
+    return Column(
+      children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Padding(
+              padding: EdgeInsets.only(left: 20, top: 15, bottom: 10),
+              child: Text(data['weekDay'] + ', ' + data['d'] + '.' + data['m'],
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: (!full[index]) ? 18 : 16))),
+          if (!full[index]) ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Image.network(
+                  'http:' + data['day']['condition']['icon'],
+                  height: 35,
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 10, right: 20),
+                    child: Text(
+                      (data['day']['temp_c'].toString()[0] != '-' ? '+' : '') +
+                          data['day']['temp_c'].toStringAsFixed(0) +
+                          '°' +
+                          '/' +
+                          (data['night']['temp_c'].toString()[0] != '-'
+                              ? '+'
+                              : '') +
+                          data['night']['temp_c'].toStringAsFixed(0) +
+                          '°',
+                      style: TextStyle(fontSize: (!full[index]) ? 18 : 16),
+                    ))
+              ],
+            )
+          ]
+        ]),
+        if (full[index]) ...[
+          getRow('Morning', data['morning'], data['windDirections'][0]),
+          getRow('Day', data['day'], data['windDirections'][1]),
+          getRow('Evening', data['evening'], data['windDirections'][2]),
+          getRow('Night', data['night'], data['windDirections'][3]),
+        ]
+      ],
+    );
   }
 
   @override
@@ -303,252 +383,45 @@ class _WeatherState extends State<Weather> {
                                               .weekday;
                                           String weekDay = Days[temp - 1];
 
-                                          return SizedBox(
-                                              child: Card(
-                                                  color: Color.fromARGB(
-                                                      181, 93, 127, 199),
-                                                  elevation: 0.6,
-                                                  child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          left:
-                                                                              20,
-                                                                          top:
-                                                                              10),
-                                                                  child: Text(
-                                                                      '$weekDay, $d.$m',
-                                                                      style: TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.bold)))
-                                                            ]),
-                                                        Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceAround,
-                                                            children: [
-                                                              Expanded(
-                                                                  child: Padding(
-                                                                      padding: EdgeInsets.only(
-                                                                          left:
-                                                                              20),
-                                                                      child: Text(
-                                                                          'Morning',
-                                                                          style:
-                                                                              TextStyle(color: Colors.white)))),
-                                                              Expanded(
-                                                                  child: Row(
-                                                                      children: [
-                                                                    Image.network(
-                                                                        'http:' +
-                                                                            morning['condition'][
-                                                                                'icon'],
-                                                                        height:
-                                                                            40),
-                                                                    Padding(
-                                                                        padding: EdgeInsets.only(
-                                                                            left:
-                                                                                20),
-                                                                        child: Text(
-                                                                            morning['temp_c'].toStringAsFixed(0) +
-                                                                                '°',
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)))
-                                                                  ])),
-                                                              Expanded(
-                                                                  child: Text((morning['wind_kph'] /
-                                                                              3.6)
-                                                                          .toStringAsFixed(
-                                                                              1) +
-                                                                      '  m/s, ' +
-                                                                      (morning['wind_dir'].toString().length ==
-                                                                              3
-                                                                          ? morning['wind_dir'].substring(
-                                                                              1)
-                                                                          : morning[
-                                                                              'wind_dir']) +
-                                                                      ' ')),
-                                                              Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          right:
-                                                                              10),
-                                                                  child: getIcon(
-                                                                      windDirections[
-                                                                          0]))
-                                                            ]),
-                                                        Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceAround,
-                                                            children: [
-                                                              Expanded(
-                                                                  child: Padding(
-                                                                      padding: EdgeInsets.only(
-                                                                          left:
-                                                                              20),
-                                                                      child: Text(
-                                                                          'Day',
-                                                                          style:
-                                                                              TextStyle(color: Colors.white)))),
-                                                              Expanded(
-                                                                  child: Row(
-                                                                      children: [
-                                                                    Image.network(
-                                                                        'http:' +
-                                                                            day['condition'][
-                                                                                'icon'],
-                                                                        height:
-                                                                            40),
-                                                                    Padding(
-                                                                        padding: EdgeInsets.only(
-                                                                            left:
-                                                                                20),
-                                                                        child: Text(
-                                                                            day['temp_c'].toStringAsFixed(0) +
-                                                                                '°',
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)))
-                                                                  ])),
-                                                              Expanded(
-                                                                  child: Text((day['wind_kph'] /
-                                                                              3.6)
-                                                                          .toStringAsFixed(
-                                                                              1) +
-                                                                      '  m/s, ' +
-                                                                      (day['wind_dir'].toString().length ==
-                                                                              3
-                                                                          ? day['wind_dir'].substring(
-                                                                              1)
-                                                                          : day[
-                                                                              'wind_dir']))),
-                                                              Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          right:
-                                                                              10),
-                                                                  child: getIcon(
-                                                                      windDirections[
-                                                                          1]))
-                                                            ]),
-                                                        Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceAround,
-                                                            children: [
-                                                              Expanded(
-                                                                  child: Padding(
-                                                                      padding: EdgeInsets.only(
-                                                                          left:
-                                                                              20),
-                                                                      child: Text(
-                                                                          'Evening',
-                                                                          style:
-                                                                              TextStyle(color: Colors.white)))),
-                                                              Expanded(
-                                                                  child: Row(
-                                                                      children: [
-                                                                    Image.network(
-                                                                        'http:' +
-                                                                            evening['condition'][
-                                                                                'icon'],
-                                                                        height:
-                                                                            40),
-                                                                    Padding(
-                                                                        padding: EdgeInsets.only(
-                                                                            left:
-                                                                                20),
-                                                                        child: Text(
-                                                                            evening['temp_c'].toStringAsFixed(0) +
-                                                                                '°',
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)))
-                                                                  ])),
-                                                              Expanded(
-                                                                  child: Text((evening['wind_kph'] /
-                                                                              3.6)
-                                                                          .toStringAsFixed(
-                                                                              1) +
-                                                                      '  m/s, ' +
-                                                                      (evening['wind_dir'].toString().length ==
-                                                                              3
-                                                                          ? evening['wind_dir'].substring(
-                                                                              1)
-                                                                          : evening[
-                                                                              'wind_dir']))),
-                                                              Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          right:
-                                                                              10),
-                                                                  child: getIcon(
-                                                                      windDirections[
-                                                                          2]))
-                                                            ]),
-                                                        Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceAround,
-                                                            children: [
-                                                              Expanded(
-                                                                  child: Padding(
-                                                                      padding: EdgeInsets.only(
-                                                                          left:
-                                                                              20),
-                                                                      child: Text(
-                                                                          'Night',
-                                                                          style:
-                                                                              TextStyle(color: Colors.white)))),
-                                                              Expanded(
-                                                                  child: Row(
-                                                                      children: [
-                                                                    Image.network(
-                                                                        'http:' +
-                                                                            night['condition'][
-                                                                                'icon'],
-                                                                        height:
-                                                                            40),
-                                                                    Padding(
-                                                                        padding: EdgeInsets.only(
-                                                                            left:
-                                                                                20),
-                                                                        child: Text(
-                                                                            night['temp_c'].toStringAsFixed(0) +
-                                                                                '°',
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)))
-                                                                  ])),
-                                                              Expanded(
-                                                                  child: Text((night['wind_kph'] /
-                                                                              3.6)
-                                                                          .toStringAsFixed(
-                                                                              1) +
-                                                                      '  m/s, ' +
-                                                                      (night['wind_dir'].length ==
-                                                                              3
-                                                                          ? night['wind_dir'].substring(
-                                                                              1)
-                                                                          : night[
-                                                                              'wind_dir']))),
-                                                              Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          right:
-                                                                              10),
-                                                                  child: getIcon(
-                                                                      windDirections[
-                                                                          3]))
-                                                            ])
-                                                      ])));
+                                          Map<String, dynamic> data = {
+                                            'morning': morning,
+                                            'day': day,
+                                            'evening': evening,
+                                            'night': night,
+                                            'windDirections': windDirections,
+                                            'weekDay': weekDay,
+                                            'd': d,
+                                            'm': m,
+                                            'index': index
+                                          };
+
+                                          return GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  if ([0, 1].contains(index)) {
+                                                    return;
+                                                  }
+                                                  for (int i = 0; i < 14; i++) {
+                                                    if (![0,1,index].contains(i)) {
+                                                      full[i] = false;
+                                                    }
+                                                  }
+                                                  full[index] = !full[index];
+                                                });
+                                              },
+                                              child: SizedBox(
+                                                  child: Card(
+                                                      color: Color.fromARGB(
+                                                          181, 93, 127, 199),
+                                                      elevation: 0.6,
+                                                      child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            getCardChildren(
+                                                                data)
+                                                          ]))));
                                         })
                                   ]))
                             ])));
