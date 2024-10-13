@@ -66,7 +66,7 @@ class _WeatherState extends State<Weather> {
     'Khanty-Mansiysk',
     'Moscow',
     'Surgut',
-    'Tumen',
+    'Tyumen',
     'Perm'
   ];
 
