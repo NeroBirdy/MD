@@ -100,57 +100,49 @@ class _SelectProductState extends State<SelectProduct> {
         titleTextStyle: TextStyle(fontSize: 13, color: Colors.black),
         title: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: Stack(
+          child: Column(
             children: [
-              Column(
-                children: [
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 48, right: 70),
-                        child: Text('Ккал'),
-                      ),
-                      Text('Б'),
-                      Text('Ж'),
-                      Padding(
-                        padding: EdgeInsets.only(right: 0),
-                        child: Text('У'),
-                      ),
-                      SizedBox(
-                        width: 30,
-                      )
-                    ],
-                  )
-                ],
-              ),
-              Positioned(
-                top: 0,
-                right: 15,
-                child: SizedBox(
-                  height: 35,
-                  width: 350,
-                  child: TextField(
-                    onChanged: (text) {
-                      setState(() {
-                        filter = text;
-                        Search(filter);
-                      });
-                    },
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(5),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(25.0),
-                        ),
+              SizedBox(
+                height: 35,
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: TextField(
+                  onChanged: (text) {
+                    setState(() {
+                      filter = text;
+                      Search(filter);
+                    });
+                  },
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(5),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25.0),
                       ),
                     ),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 11,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 48, right: 70),
+                    child: Text('Ккал'),
+                  ),
+                  Text('Б'),
+                  Text('Ж'),
+                  Padding(
+                    padding: EdgeInsets.only(right: 0),
+                    child: Text('У'),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  )
+                ],
               )
             ],
           ),
