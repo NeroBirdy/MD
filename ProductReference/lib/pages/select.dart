@@ -114,7 +114,7 @@ class _SelectProductState extends State<SelectProduct> {
                 right: 0,
                 child: SizedBox(
                   height: 35,
-                  width: 370,
+                  width: 350,
                   child: TextField(
                     onChanged: (text) {
                       setState(() {
