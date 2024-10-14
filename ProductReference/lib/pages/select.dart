@@ -32,14 +32,20 @@ class _SelectProductState extends State<SelectProduct> {
   }
 
   void fetchData() async {
-    final response = await supabase.from('products').select();
-    setState(() {
-      if (!check(db.product, response)) {
-        db.product = response;
-        db.updateProduct();
-      }
-      filtered = db.product;
-    });
+    try {
+      final response = await supabase.from('products').select();
+      setState(() {
+        if (!check(db.product, response)) {
+          db.product = response;
+          db.updateProduct();
+        }
+        filtered = db.product;
+      });
+    } catch (error) {
+      setState(() {
+        filtered = db.product;
+      });
+    }
   }
 
   bool check(List list1, List list2) {

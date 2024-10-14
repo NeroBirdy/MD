@@ -124,11 +124,9 @@ class _ProductListState extends State<ProductList> {
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(values['text'] != 'Завтрак'
-                                    ? values['text'] + '     '
-                                    : values['text']),
+                                Text(values['text']),
                                 Padding(
-                                    padding: EdgeInsets.only(left: 70),
+                                    padding: EdgeInsets.only(left: 60),
                                     child: Text('${values['calories']} Ккал')),
                                 Padding(
                                   padding: EdgeInsets.only(left: 5),
@@ -179,12 +177,13 @@ class _ProductListState extends State<ProductList> {
                                                 values['list'].removeAt(index);
                                                 print(values['list']);
                                                 db.updateFood(values['time'],
-                                                    values['list'],false);
+                                                    values['list'], false);
                                               });
                                             },
                                             icon: FaIcon(
                                               FontAwesomeIcons.minus,
-                                              color: Color.fromARGB(255, 185, 82, 82),
+                                              color: Color.fromARGB(
+                                                  255, 185, 82, 82),
                                             ),
                                           ))
                                     ],
