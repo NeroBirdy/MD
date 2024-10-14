@@ -34,12 +34,27 @@ class _SelectProductState extends State<SelectProduct> {
   void fetchData() async {
     final response = await supabase.from('products').select();
     setState(() {
-      if (db.product != response) {
+      if (!check(db.product, response)) {
         db.product = response;
         db.updateProduct();
       }
       filtered = db.product;
     });
+  }
+
+  bool check(List list1, List list2) {
+    if (list1.length != list2.length) return false;
+
+    for (int i = 0; i < list1.length; i++) {
+      if (list1[i]['id'] != list2[i]['id'] ||
+          list1[i]['name'] != list2[i]['name'] ||
+          list1[i]['proteins'] != list2[i]['proteins'] ||
+          list1[i]['fats'] != list2[i]['fats'] ||
+          list1[i]['carbohydrates'] != list2[i]['carbohydrates'] ||
+          list1[i]['calories'] != list2[i]['calories']) return false;
+    }
+
+    return true;
   }
 
   @override
@@ -66,7 +81,10 @@ class _SelectProductState extends State<SelectProduct> {
                     Navigator.pushNamed(context, '/home');
                   },
                   icon: FaIcon(FontAwesomeIcons.arrowLeft)),
-              Text(args['text']!, style: TextStyle(fontSize: 18),),
+              Text(
+                args['text']!,
+                style: TextStyle(fontSize: 18),
+              ),
               IconButton(
                   onPressed: () {
                     db.updateFood(time, choosen, true);
