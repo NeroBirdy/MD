@@ -128,8 +128,8 @@ class _SelectProductState extends State<SelectProduct> {
                 ],
               ),
               Positioned(
-                top: -0,
-                right: 0,
+                top: 0,
+                right: 15,
                 child: SizedBox(
                   height: 35,
                   width: 350,
