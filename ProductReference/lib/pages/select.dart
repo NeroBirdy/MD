@@ -53,11 +53,7 @@ class _SelectProductState extends State<SelectProduct> {
 
     for (int i = 0; i < list1.length; i++) {
       if (list1[i]['id'] != list2[i]['id'] ||
-          list1[i]['name'] != list2[i]['name'] ||
-          list1[i]['proteins'] != list2[i]['proteins'] ||
-          list1[i]['fats'] != list2[i]['fats'] ||
-          list1[i]['carbohydrates'] != list2[i]['carbohydrates'] ||
-          list1[i]['calories'] != list2[i]['calories']) return false;
+          list1[i]['name'] != list2[i]['name']) return false;
     }
 
     return true;
