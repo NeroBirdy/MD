@@ -30,7 +30,7 @@ class Weather extends StatefulWidget {
 
 class _WeatherState extends State<Weather> {
   String city = 'Khanty-Mansiysk';
-  var key = 'e42162a9613f4d6999e32756241310';
+  var key = 'cd02fbd755664b35b3e133313241610';
   late Future<Map<String, dynamic>> response;
   final ScrollController sc = ScrollController();
 
@@ -89,7 +89,7 @@ class _WeatherState extends State<Weather> {
       var json = jsonDecode(res.body);
       return json;
     } else {
-      throw Exception('Error');
+      throw Exception(res.statusCode);
     }
   }
 

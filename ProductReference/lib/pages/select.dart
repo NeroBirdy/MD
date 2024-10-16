@@ -64,14 +64,6 @@ class _SelectProductState extends State<SelectProduct> {
 
   Future getShowDialog(BuildContext context, int index) {
     TextEditingController controller = TextEditingController(text: '100');
-    controller.addListener(() {
-      print(textCalories);
-      setState(() {
-        textCalories = (filtered[index]['calories'] *
-                (double.parse(controller.text) / 100))
-            .toString();
-      });
-    });
     return showDialog(
         context: context,
         builder: (context) {
@@ -104,14 +96,21 @@ class _SelectProductState extends State<SelectProduct> {
                             height: 30,
                             child: TextField(
                               inputFormatters: [
-                          FilteringTextInputFormatter(RegExp(r','),
-                              allow: false),
-                        ],
+                                FilteringTextInputFormatter(
+                                    RegExp(r'^\d+\.?\d*'),
+                                    allow: true),
+                              ],
                               onChanged: (value) {
                                 setState(() {
-                                  textCalories = (filtered[index]['calories'] *
-                                          (double.parse(controller.text) / 100))
-                                      .toStringAsFixed(2);
+                                  if (controller.text.length == 0) {
+                                    textCalories = '0';
+                                  } else {
+                                    textCalories = (filtered[index]
+                                                ['calories'] *
+                                            (double.parse(controller.text) /
+                                                100))
+                                        .toStringAsFixed(2);
+                                  }
                                 });
                               },
                               controller: controller,
@@ -123,13 +122,15 @@ class _SelectProductState extends State<SelectProduct> {
                                   ),
                                 ),
                               ),
-                              keyboardType: TextInputType.number,
+                              // keyboardType: TextInputType.number,
                             ),
                           ),
                           Text('грамм')
                         ],
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [Text(textCalories), Text('Ккал')],
@@ -261,11 +262,14 @@ class _SelectProductState extends State<SelectProduct> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          setState(() {
-                            textCalories =
-                                filtered[index]['calories'].toString();
-                          });
-                          getShowDialog(context, index);
+                          if (!choosen.any(
+                              (item) => item['id'] == filtered[index]['id'])) {
+                            setState(() {
+                              textCalories =
+                                  filtered[index]['calories'].toString();
+                            });
+                            getShowDialog(context, index);
+                          }
                         },
                         child: SizedBox(
                             child: Stack(
@@ -342,7 +346,8 @@ class _SelectProductState extends State<SelectProduct> {
                                           'id': filtered[index]['id'],
                                           'calories': filtered[index]
                                               ['calories'],
-                                          'name': filtered[index]['name']
+                                          'name': filtered[index]['name'],
+                                          'grams': '100'
                                         });
                                       }
                                     });

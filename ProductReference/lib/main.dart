@@ -170,11 +170,12 @@ class _ProductListState extends State<ProductList> {
                                             ],
                                           )),
                                       Positioned(
-                                        right: 70,
-                                          child: Text(values['list'][index]
-                                                      ['calories']
-                                                  .toString() +
-                                              'Ккал',style: TextStyle(fontSize: 16),)),
+                                          top: 10,
+                                          right: 110,
+                                          child: Text(
+                                            '${values['list'][index]['calories'].toString()} Ккал',
+                                            style: TextStyle(fontSize: 16),
+                                          )),
                                       Positioned(
                                           right: 25,
                                           child: IconButton(
