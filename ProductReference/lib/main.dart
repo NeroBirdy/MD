@@ -93,9 +93,9 @@ class _ProductListState extends State<ProductList> {
                       values['icon'] = FaIcon(FontAwesomeIcons.bowlFood);
                       values['list'] = db.dinner;
                     }
-
                     for (int i = 0; i < values['list'].length; i++) {
-                      temp += values['list'][i]['calories'];
+                      temp += double.parse(
+                          values['list'][i]['calories'].toString());
                     }
                     values['calories'] = temp.toString();
 
@@ -164,11 +164,17 @@ class _ProductListState extends State<ProductList> {
                                               Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
-                                                    '${values['list'][index]['calories']} ккал'),
+                                                    '${values['list'][index]['grams']} г'),
                                               ),
                                               Divider()
                                             ],
                                           )),
+                                      Positioned(
+                                        right: 70,
+                                          child: Text(values['list'][index]
+                                                      ['calories']
+                                                  .toString() +
+                                              'Ккал',style: TextStyle(fontSize: 16),)),
                                       Positioned(
                                           right: 25,
                                           child: IconButton(

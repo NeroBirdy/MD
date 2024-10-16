@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -92,7 +93,7 @@ class _SelectProductState extends State<SelectProduct> {
             content: StatefulBuilder(
               builder: (context, setState) {
                 return SizedBox(
-                  height: 50,
+                  height: 70,
                   child: Column(
                     children: [
                       Row(
@@ -102,12 +103,15 @@ class _SelectProductState extends State<SelectProduct> {
                             width: 150,
                             height: 30,
                             child: TextField(
+                              inputFormatters: [
+                          FilteringTextInputFormatter(RegExp(r','),
+                              allow: false),
+                        ],
                               onChanged: (value) {
-                                print(textCalories);
                                 setState(() {
                                   textCalories = (filtered[index]['calories'] *
                                           (double.parse(controller.text) / 100))
-                                      .toString();
+                                      .toStringAsFixed(2);
                                 });
                               },
                               controller: controller,
@@ -125,6 +129,7 @@ class _SelectProductState extends State<SelectProduct> {
                           Text('грамм')
                         ],
                       ),
+                      SizedBox(height: 10,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [Text(textCalories), Text('Ккал')],
@@ -138,10 +143,12 @@ class _SelectProductState extends State<SelectProduct> {
             actions: [
               IconButton(
                   onPressed: () {
+                    print(controller.text);
                     choosen.add({
                       'id': filtered[index]['id'],
                       'calories': textCalories,
-                      'name': filtered[index]['name']
+                      'name': filtered[index]['name'],
+                      'grams': controller.text
                     });
                     Navigator.of(context).pop();
                   },

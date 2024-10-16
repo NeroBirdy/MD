@@ -9,13 +9,18 @@ class DataBase {
   final myBox = Hive.box('mybox');
 
   void loadData() {
-    DateTime date = myBox.get('date', defaultValue: DateTime.now());
-    if (DateTime.now().difference(date).inDays >= 1) {
-      myBox.put('Breakfast', []);
-      myBox.put('Lunch', []);
-      myBox.put('Dinner', []);
+    DateTime date;
+    if (myBox.get('date') == null) {
+      myBox.put('date', DateTime.now());
+    } else {
+      date = myBox.get('date');
+      if (DateTime.now().day != date.day) {
+        myBox.put('Breakfast', []);
+        myBox.put('Lunch', []);
+        myBox.put('Dinner', []);
 
-      myBox.put('lastUpdated', DateTime.now());
+        myBox.put('date', DateTime.now());
+      }
     }
 
     product = myBox.get('List', defaultValue: []);
