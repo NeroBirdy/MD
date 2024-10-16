@@ -59,6 +59,101 @@ class _SelectProductState extends State<SelectProduct> {
     return true;
   }
 
+  String textCalories = '';
+
+  Future getShowDialog(BuildContext context, int index) {
+    TextEditingController controller = TextEditingController(text: '100');
+    controller.addListener(() {
+      print(textCalories);
+      setState(() {
+        textCalories = (filtered[index]['calories'] *
+                (double.parse(controller.text) / 100))
+            .toString();
+      });
+    });
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            titlePadding: EdgeInsets.zero,
+            title: Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: FaIcon(
+                      FontAwesomeIcons.close,
+                      color: Colors.black,
+                    )),
+                Text(filtered[index]['name'])
+              ],
+            ),
+            content: StatefulBuilder(
+              builder: (context, setState) {
+                return SizedBox(
+                  height: 50,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 150,
+                            height: 30,
+                            child: TextField(
+                              onChanged: (value) {
+                                print(textCalories);
+                                setState(() {
+                                  textCalories = (filtered[index]['calories'] *
+                                          (double.parse(controller.text) / 100))
+                                      .toString();
+                                });
+                              },
+                              controller: controller,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(5),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(25.0),
+                                  ),
+                                ),
+                              ),
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                          Text('грамм')
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [Text(textCalories), Text('Ккал')],
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+            actionsPadding: EdgeInsets.only(right: 5),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    choosen.add({
+                      'id': filtered[index]['id'],
+                      'calories': textCalories,
+                      'name': filtered[index]['name']
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  icon: FaIcon(
+                    FontAwesomeIcons.check,
+                    color: Colors.greenAccent,
+                  )),
+            ],
+          );
+        });
+  }
+
   @override
   void initState() {
     db.loadData();
@@ -157,89 +252,106 @@ class _SelectProductState extends State<SelectProduct> {
                 child: ListView.builder(
                     itemCount: filtered.length,
                     itemBuilder: (context, index) {
-                      return SizedBox(
-                          child: Stack(
-                        children: [
-                          Card(
-                            child: Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 15, top: 7),
-                                    child: Text(
-                                      filtered[index]['name'],
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                                Align(
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            textCalories =
+                                filtered[index]['calories'].toString();
+                          });
+                          getShowDialog(context, index);
+                        },
+                        child: SizedBox(
+                            child: Stack(
+                          children: [
+                            Card(
+                              child: Column(
+                                children: [
+                                  Align(
                                     alignment: Alignment.topLeft,
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 15),
+                                      padding:
+                                          EdgeInsets.only(left: 15, top: 7),
                                       child: Text(
-                                        textAlign: TextAlign.left,
-                                        filtered[index]['description'],
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 10),
-                                      ),
-                                    )),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 60, right: 80, bottom: 4),
-                                      child: Text(
-                                        filtered[index]['calories'].toString(),
+                                        filtered[index]['name'],
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                    Text(filtered[index]['protein'].toString()),
-                                    Text(filtered[index]['fats'].toString()),
-                                    Text(filtered[index]['carbohydrates']
-                                        .toString()),
-                                    SizedBox(
-                                      width: 40,
-                                    )
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                  Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(left: 15),
+                                        child: Text(
+                                          textAlign: TextAlign.left,
+                                          filtered[index]['description'],
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 10),
+                                        ),
+                                      )),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 60, right: 80, bottom: 4),
+                                        child: Text(
+                                          filtered[index]['calories']
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Text(filtered[index]['protein']
+                                          .toString()),
+                                      Text(filtered[index]['fats'].toString()),
+                                      Text(filtered[index]['carbohydrates']
+                                          .toString()),
+                                      SizedBox(
+                                        width: 40,
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Positioned(
-                            top: 12,
-                            right: 2,
-                            child: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    print(choosen);
-                                    if (choosen.any((item) =>
-                                        item['id'] == filtered[index]['id'])) {
-                                      choosen.removeWhere((item) =>
-                                          item['id'] == filtered[index]['id']);
-                                    } else {
-                                      choosen.add({
-                                        'id': filtered[index]['id'],
-                                        'calories': filtered[index]['calories'],
-                                        'name': filtered[index]['name']
-                                      });
-                                    }
-                                  });
-                                },
-                                icon: !choosen.any((item) =>
-                                        item['id'] == filtered[index]['id'])
-                                    ? FaIcon(FontAwesomeIcons.plus,
-                                        color: Color.fromARGB(255, 59, 114, 61))
-                                    : FaIcon(FontAwesomeIcons.minus,
-                                        color:
-                                            Color.fromARGB(255, 185, 82, 82))),
-                          ),
-                        ],
-                      ));
+                            Positioned(
+                              top: 12,
+                              right: 2,
+                              child: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      print(choosen);
+                                      if (choosen.any((item) =>
+                                          item['id'] ==
+                                          filtered[index]['id'])) {
+                                        choosen.removeWhere((item) =>
+                                            item['id'] ==
+                                            filtered[index]['id']);
+                                      } else {
+                                        choosen.add({
+                                          'id': filtered[index]['id'],
+                                          'calories': filtered[index]
+                                              ['calories'],
+                                          'name': filtered[index]['name']
+                                        });
+                                      }
+                                    });
+                                  },
+                                  icon: !choosen.any((item) =>
+                                          item['id'] == filtered[index]['id'])
+                                      ? FaIcon(FontAwesomeIcons.plus,
+                                          color:
+                                              Color.fromARGB(255, 59, 114, 61))
+                                      : FaIcon(FontAwesomeIcons.minus,
+                                          color: Color.fromARGB(
+                                              255, 185, 82, 82))),
+                            ),
+                          ],
+                        )),
+                      );
                     })),
           ],
         ),
