@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:news/pages/description.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Bad News',
       home: News(),
+      routes: {
+        '/home': (context) => News(),
+        '/description': (context) => Description()
+      },
     );
   }
 }
@@ -140,6 +145,7 @@ class _NewsState extends State<News> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -164,30 +170,36 @@ class _NewsState extends State<News> {
               child: ListView.builder(
                 itemCount: filtered.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            filtered[index]['list']['name'],
-                            style: TextStyle(),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/description',
+                          arguments: <String, Map>{'list': filtered[index]});
+                    },
+                    child: Card(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              filtered[index]['list']['name'],
+                              style: TextStyle(),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 20, left: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(filtered[index]['date']),
-                              Text('#${filtered[index]['list']['tag']}')
-                            ],
-                          ),
-                        )
-                      ],
+                          Padding(
+                            padding: EdgeInsets.only(right: 20, left: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(filtered[index]['date']),
+                                Text('#${filtered[index]['list']['tag']}')
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },
