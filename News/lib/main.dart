@@ -306,7 +306,7 @@ class _NewsState extends State<News> {
                             },
                             child: buildChild(
                                 checkNewsOfTheDay(filtered[index]['list']),
-                                index));
+                                index));  
                       },
                     )
                   : Center(
@@ -452,6 +452,7 @@ class _NewsState extends State<News> {
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 3,
                                     )),
+                                SizedBox(width: 5,),
                                 Expanded(
                                   flex: 1,
                                   child: SizedBox(),
@@ -460,7 +461,7 @@ class _NewsState extends State<News> {
                             ),
                             Positioned(
                                 top: 1,
-                                right: 10,
+                                right: 2,
                                 child: Text(
                                   filtered[index]['date'].substring(0, 10),
                                   style: TextStyle(
