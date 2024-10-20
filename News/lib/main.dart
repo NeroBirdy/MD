@@ -407,7 +407,7 @@ class _NewsState extends State<News> {
             ),
           ),
           Positioned(
-            bottom: 12,
+            bottom: 10,
             left: 20,
             child: Text(
               filtered[index]['date'],
@@ -416,7 +416,7 @@ class _NewsState extends State<News> {
           ),
           Positioned(
             right: 20,
-            bottom: 12,
+            bottom: 10,
             child: Text(
               '#${filtered[index]['list']['tag']}',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
