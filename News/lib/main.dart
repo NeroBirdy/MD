@@ -227,27 +227,36 @@ class _NewsState extends State<News> {
             color: const Color.fromARGB(255, 61, 61, 61),
           )),
       itemBuilder: (context) {
-        return arr.map((String temp) {
-          return PopupMenuItem(
-            child: StatefulBuilder(
-              builder: (context, setState) {
-                return CheckboxListTile(
-                  title: Text(temp),
-                  value: changed.contains(temp),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  onChanged: (value) {
-                    setState(() {
-                      value! ? changed.add(temp) : changed.remove(temp);
-                    });
-                    this.setState(() {
-                      getFiltered();
-                    });
-                  },
-                );
-              },
+        return [
+          PopupMenuItem(
+              child: Container(
+            width: 150,
+            height: arr.length > 5 ? 270 : null,
+            child: SingleChildScrollView(
+              child: Column(
+                children: arr.map((temp) {
+                  return StatefulBuilder(
+                    builder: (context, setState) {
+                      return CheckboxListTile(
+                        title: Text(temp),
+                        value: changed.contains(temp),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        onChanged: (value) {
+                          setState(() {
+                            value! ? changed.add(temp) : changed.remove(temp);
+                          });
+                          this.setState(() {
+                            getFiltered();
+                          });
+                        },
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
             ),
-          );
-        }).toList();
+          ))
+        ];
       },
     );
   }
@@ -278,7 +287,12 @@ class _NewsState extends State<News> {
                         sortFiltered(reversed);
                       });
                     },
-                    icon: FaIcon(FontAwesomeIcons.filter, color: reversed ? const Color.fromARGB(255, 190, 117, 111) : const Color.fromARGB(255, 98, 172, 100),)),
+                    icon: FaIcon(
+                      FontAwesomeIcons.filter,
+                      color: reversed
+                          ? const Color.fromARGB(255, 190, 117, 111)
+                          : const Color.fromARGB(255, 98, 172, 100),
+                    )),
                 getPopUpMenu(datesForFilteredDate, filteredDate),
                 SizedBox(
                   width: 20,
@@ -306,7 +320,7 @@ class _NewsState extends State<News> {
                             },
                             child: buildChild(
                                 checkNewsOfTheDay(filtered[index]['list']),
-                                index));  
+                                index));
                       },
                     )
                   : Center(
@@ -452,7 +466,9 @@ class _NewsState extends State<News> {
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 3,
                                     )),
-                                SizedBox(width: 5,),
+                                SizedBox(
+                                  width: 5,
+                                ),
                                 Expanded(
                                   flex: 1,
                                   child: SizedBox(),
