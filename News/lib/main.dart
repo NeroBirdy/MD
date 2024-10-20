@@ -230,14 +230,15 @@ class _NewsState extends State<News> {
         return [
           PopupMenuItem(
               child: Container(
-            width: 150,
             height: arr.length > 5 ? 270 : null,
             child: SingleChildScrollView(
               child: Column(
                 children: arr.map((temp) {
                   return StatefulBuilder(
                     builder: (context, setState) {
-                      return CheckboxListTile(
+                      return SizedBox(
+                        width: 250,
+                        child: CheckboxListTile(
                         title: Text(temp),
                         value: changed.contains(temp),
                         controlAffinity: ListTileControlAffinity.leading,
@@ -249,6 +250,7 @@ class _NewsState extends State<News> {
                             getFiltered();
                           });
                         },
+                      ),
                       );
                     },
                   );
