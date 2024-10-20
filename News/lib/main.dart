@@ -263,6 +263,14 @@ class _NewsState extends State<News> {
     );
   }
 
+  Future refresh() async {
+    await Future.delayed(Duration(seconds: 1, microseconds: 500));
+    setState(() {
+      reversed = false;
+      fetchData();
+    });
+  }
+
   @override
   void initState() {
     fetchData();
@@ -273,6 +281,7 @@ class _NewsState extends State<News> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         automaticallyImplyLeading: false,
@@ -305,7 +314,7 @@ class _NewsState extends State<News> {
           ],
         ),
       ),
-      body: Column(
+      body: RefreshIndicator(child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
@@ -329,7 +338,7 @@ class _NewsState extends State<News> {
                       child: CircularProgressIndicator(),
                     ))
         ],
-      ),
+      ), onRefresh: refresh)
     );
   }
 
