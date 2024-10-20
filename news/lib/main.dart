@@ -318,7 +318,6 @@ class _NewsState extends State<News> {
   }
 
   bool checkNewsOfTheDay(Map news) {
-    DateTime today = DateTime.now();
     if (news['news_of_the_day'] && (checkDate(news['created_at']))) {
       return true;
     }
