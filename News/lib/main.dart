@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:news/pages/description.dart';
 import 'package:news/data/db.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+import 'package:path_provider/path_provider.dart';          
 import 'package:http/http.dart' as http;
 
 void main() async {
@@ -86,6 +86,7 @@ class _NewsState extends State<News> {
       sortNews();
       Set<String> uniqueDates = {};
       Set<String> uniqueTags = {};
+      dates = [];
 
       for (int i = 0; i < news.length; i++) {
         dates.add(getDate(i, true));
