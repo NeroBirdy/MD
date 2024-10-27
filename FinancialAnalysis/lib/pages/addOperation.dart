@@ -144,6 +144,7 @@ class _AddOperationState extends State<AddOperation> {
                     (item) => item['name'] == db.operations[index!]['category'])
                 .toList()[0];
           }
+          checkFields();
         }
       });
     });
