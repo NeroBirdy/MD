@@ -41,26 +41,26 @@ class _AddCategoryState extends State<AddCategory> {
         context: context,
         builder: (context) {
           return Dialog(
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.8,
               height: 100,
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 8, right: 8),
+                    padding: const EdgeInsets.only(top: 8, right: 8),
                     child: Align(
                         alignment: Alignment.topRight,
                         child: GestureDetector(
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.close,
                             size: 24,
                           ),
                         )),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(top: 8),
                     child: Align(
                       alignment: Alignment.center,
@@ -127,7 +127,7 @@ class _AddCategoryState extends State<AddCategory> {
                   });
                 }
               },
-              icon: Icon(Icons.arrow_back)),
+              icon: const Icon(Icons.arrow_back)),
           backgroundColor: Colors.white,
           title: Text(index != null ? 'Редактировать' : 'Новая категория'),
         ),
@@ -140,7 +140,7 @@ class _AddCategoryState extends State<AddCategory> {
                 child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: TextField(
                         controller: controller,
                         onChanged: (value) {
@@ -149,7 +149,7 @@ class _AddCategoryState extends State<AddCategory> {
                             checkField();
                           });
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: 'Название категории',
                             border: InputBorder.none),
                       ),
@@ -159,7 +159,7 @@ class _AddCategoryState extends State<AddCategory> {
           ),
         ),
         floatingActionButton: Padding(
-          padding: EdgeInsets.only(left: 25),
+          padding: const EdgeInsets.only(left: 25),
           child: Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(

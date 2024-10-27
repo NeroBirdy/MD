@@ -51,7 +51,7 @@ class _CategoryState extends State<Category> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: IconButton(
-                        padding: EdgeInsets.only(right: 20, left: 10),
+                        padding: const EdgeInsets.only(right: 20, left: 10),
                         onPressed: () {
                           Navigator.pushNamed(context, '/home', arguments: {
                             'firstDate': firstDate,
@@ -60,13 +60,13 @@ class _CategoryState extends State<Category> {
                             'mode': mode
                           });
                         },
-                        icon: Icon(Icons.arrow_back)),
+                        icon: const Icon(Icons.arrow_back)),
                   ),
-                  Text('Мои категории'),
+                  const Text('Мои категории'),
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(right: 0),
+                padding: const EdgeInsets.only(right: 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -77,7 +77,7 @@ class _CategoryState extends State<Category> {
                             mode = false;
                           });
                         },
-                        child: Text('Расходы'),
+                        child: const Text('Расходы'),
                       ),
                     ),
                     Expanded(
@@ -87,7 +87,7 @@ class _CategoryState extends State<Category> {
                                 mode = true;
                               });
                             },
-                            child: Text('Зачисления')))
+                            child: const Text('Зачисления')))
                   ],
                 ),
               ),
@@ -129,17 +129,17 @@ class _CategoryState extends State<Category> {
                       isDismissible: true,
                       enableDrag: true,
                       builder: (context) {
-                        return Container(
+                        return SizedBox(
                             height: 180,
                             child: Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: Column(
                                 children: [
                                   const Icon(
                                     Icons.horizontal_rule,
                                     size: 40,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15,
                                   ),
                                   Column(
@@ -159,7 +159,7 @@ class _CategoryState extends State<Category> {
                                           child: Container(
                                             color: Colors.transparent,
                                             width: double.infinity,
-                                            child: Row(
+                                            child: const Row(
                                               children: [
                                                 Icon(
                                                   Icons.edit,
@@ -177,7 +177,7 @@ class _CategoryState extends State<Category> {
                                               ],
                                             ),
                                           )),
-                                      Divider(
+                                      const Divider(
                                         indent: 65,
                                         endIndent: 20,
                                       ),
@@ -220,7 +220,7 @@ class _CategoryState extends State<Category> {
                                         child: Container(
                                           color: Colors.transparent,
                                           width: double.infinity,
-                                          child: Row(
+                                          child: const Row(
                                             children: [
                                               Icon(
                                                 Icons.delete,
@@ -263,7 +263,7 @@ class _CategoryState extends State<Category> {
           ]),
         ),
         floatingActionButton: Padding(
-          padding: EdgeInsets.only(left: 25),
+          padding: const EdgeInsets.only(left: 25),
           child: Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(
@@ -277,7 +277,7 @@ class _CategoryState extends State<Category> {
                     'period': period
                   });
                 },
-                child: Text(
+                child: const Text(
                   'Добавить категорию',
                   textAlign: TextAlign.center,
                 ),

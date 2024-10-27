@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/home',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/home': (context) => Home(),
-        '/add': (context) => Add(),
-        '/edit': (context) => Edit()
+        '/home': (context) => const Home(),
+        '/add': (context) => const Add(),
+        '/edit': (context) => const Edit()
       },
     );
   }

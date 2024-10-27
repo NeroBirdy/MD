@@ -71,7 +71,7 @@ class _DescriptionState extends State<Description> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pushNamed(context, '/home');
             },
@@ -79,7 +79,7 @@ class _DescriptionState extends State<Description> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 Row(
@@ -93,10 +93,10 @@ class _DescriptionState extends State<Description> {
                               File(imagePath!),
                             ),
                           ))
-                        : SizedBox()
+                        : const SizedBox()
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -108,19 +108,19 @@ class _DescriptionState extends State<Description> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 10,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ))
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 15),
+                  padding: const EdgeInsets.only(top: 10, bottom: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
                           child: Text(
                         info['list']['description'],
-                        style: TextStyle(fontSize: 17),
+                        style: const TextStyle(fontSize: 17),
                       ))
                     ],
                   ),
@@ -131,12 +131,12 @@ class _DescriptionState extends State<Description> {
                     Text(
                       '#${info['list']['tag']}',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     Text(
                       info['date'],
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     )
                   ],
                 )

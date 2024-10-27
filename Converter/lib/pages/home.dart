@@ -8,26 +8,26 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text('Converter', style: TextStyle(color: Colors.white)),
+            title: const Text('Converter', style: TextStyle(color: Colors.white)),
             backgroundColor: const Color.fromARGB(255, 161, 154, 154),
             automaticallyImplyLeading: false),
         body: Center(
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 15),
                 child: SizedBox(
                     height: 100,
                     width: 350,
                     child: ElevatedButton.icon(
                         icon: const FaIcon(
                           FontAwesomeIcons.weightScale,
-                          color: const Color.fromARGB(255, 131, 59, 255),
+                          color: Color.fromARGB(255, 131, 59, 255),
                           size: 40,
                         ),
                         onPressed: () =>
                             {Navigator.pushNamed(context, '/weight')},
-                        label: Text('Weight'),
+                        label: const Text('Weight'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromARGB(255, 192, 183, 183),
@@ -36,19 +36,19 @@ class Home extends StatelessWidget {
                         ))),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 25),
+                padding: const EdgeInsets.only(top: 25),
                 child: SizedBox(
                   height: 100,
                   width: 350,
                   child: ElevatedButton.icon(
                       icon: const FaIcon(
                         FontAwesomeIcons.ruler,
-                        color: const Color.fromARGB(255, 131, 59, 255),
+                        color: Color.fromARGB(255, 131, 59, 255),
                         size: 40,
                       ),
                       onPressed: () =>
                           {Navigator.pushNamed(context, '/length')},
-                      label: Text('Length'),
+                      label: const Text('Length'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             const Color.fromARGB(255, 192, 183, 183),
@@ -58,19 +58,19 @@ class Home extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 25),
+                padding: const EdgeInsets.only(top: 25),
                 child: SizedBox(
                   height: 100,
                   width: 350,
                   child: ElevatedButton.icon(
                       icon: const FaIcon(
                         FontAwesomeIcons.euroSign,
-                        color: const Color.fromARGB(255, 131, 59, 255),
+                        color: Color.fromARGB(255, 131, 59, 255),
                         size: 40,
                       ),
                       onPressed: () =>
                           {Navigator.pushNamed(context, '/exchange')},
-                      label: Text('Exchange'),
+                      label: const Text('Exchange'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             const Color.fromARGB(255, 192, 183, 183),
@@ -80,18 +80,18 @@ class Home extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 25),
+                padding: const EdgeInsets.only(top: 25),
                 child: SizedBox(
                   height: 100,
                   width: 350,
                   child: ElevatedButton.icon(
                       icon: const FaIcon(
                         FontAwesomeIcons.temperatureThreeQuarters,
-                        color: const Color.fromARGB(255, 131, 59, 255),
+                        color: Color.fromARGB(255, 131, 59, 255),
                         size: 40,
                       ),
                       onPressed: () => {Navigator.pushNamed(context, '/temp')},
-                      label: Text('Temperature'),
+                      label: const Text('Temperature'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             const Color.fromARGB(255, 192, 183, 183),
@@ -101,18 +101,18 @@ class Home extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 25),
+                padding: const EdgeInsets.only(top: 25),
                 child: SizedBox(
                   height: 100,
                   width: 350,
                   child: ElevatedButton.icon(
                     icon: const FaIcon(
                       FontAwesomeIcons.cube,
-                      color: const Color.fromARGB(255, 131, 59, 255),
+                      color: Color.fromARGB(255, 131, 59, 255),
                       size: 40,
                     ),
                     onPressed: () => {Navigator.pushNamed(context, '/square')},
-                    label: Text('Square'),
+                    label: const Text('Square'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 192, 183, 183),
                       shape: RoundedRectangleBorder(

@@ -33,7 +33,7 @@ class _CalendarState extends State<Calendar> {
               selected = DateTime.now();
             });
           },
-          icon: FaIcon(FontAwesomeIcons.backward));
+          icon: const FaIcon(FontAwesomeIcons.backward));
     }
 
     Widget getYearAndMonth() {
@@ -52,24 +52,24 @@ class _CalendarState extends State<Calendar> {
                   selected = DateTime(selected.year, selected.month - 1);
                 });
               },
-              icon: FaIcon(FontAwesomeIcons.arrowLeft)),
+              icon: const FaIcon(FontAwesomeIcons.arrowLeft)),
           Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 25,
                 ),
                 child: Text(
                   textYear,
-                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  style: const TextStyle(color: Colors.black, fontSize: 20),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 0,
               ),
               Text(
                 textMonth,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 25),
@@ -83,8 +83,8 @@ class _CalendarState extends State<Calendar> {
                       selected = DateTime(selected.year, selected.month + 1);
                     });
                   },
-                  icon: FaIcon(FontAwesomeIcons.arrowRight))
-              : SizedBox(
+                  icon: const FaIcon(FontAwesomeIcons.arrowRight))
+              : const SizedBox(
                   width: 60,
                 )
         ],
@@ -99,8 +99,8 @@ class _CalendarState extends State<Calendar> {
         children: days
             .map((item) => Text(
                   item,
-                  style: TextStyle(
-                      color: const Color.fromARGB(255, 245, 179, 93),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 245, 179, 93),
                       fontSize: 19),
                 ))
             .toList(),
@@ -182,7 +182,7 @@ class _CalendarState extends State<Calendar> {
                 child: Center(
                   child: Text(
                     '$day',
-                    style: TextStyle(color: Colors.white, fontSize: 17),
+                    style: const TextStyle(color: Colors.white, fontSize: 17),
                   ),
                 )),
           ),
@@ -214,8 +214,8 @@ class _CalendarState extends State<Calendar> {
 
       return GridView.count(
           crossAxisCount: 7,
-          children: grid,
-          physics: NeverScrollableScrollPhysics());
+          physics: const NeverScrollableScrollPhysics(),
+          children: grid);
     }
 
     return Scaffold(
@@ -231,7 +231,7 @@ class _CalendarState extends State<Calendar> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Отмена')),
+                  child: const Text('Отмена')),
               TextButton(
                   onPressed: () {
                     if (widget.twoDates) {
@@ -241,7 +241,7 @@ class _CalendarState extends State<Calendar> {
                       Navigator.pop(context, selectedDate);
                     }
                   },
-                  child: Text('Ок'))
+                  child: const Text('Ок'))
             ],
           )
         ],

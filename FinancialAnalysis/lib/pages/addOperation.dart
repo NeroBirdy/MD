@@ -71,7 +71,7 @@ class _AddOperationState extends State<AddOperation> {
                   Navigator.pop(context);
                 },
               );
-            }).toList(),
+            }),
           ]),
         ));
       },
@@ -85,10 +85,10 @@ class _AddOperationState extends State<AddOperation> {
           return Dialog(
               child: ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.8,
               height: 400,
-              child: Calendar(
+              child: const Calendar(
                 twoDates: false,
               ),
             ),
@@ -187,10 +187,10 @@ class _AddOperationState extends State<AddOperation> {
                   });
                 }
               },
-              icon: Icon(Icons.arrow_back)),
+              icon: const Icon(Icons.arrow_back)),
           title: index == null
               ? Text(mode ? 'Новое зачисление' : 'Новый расход')
-              : Text('Редактировать'),
+              : const Text('Редактировать'),
           backgroundColor: Colors.white,
         ),
         body: Center(
@@ -203,7 +203,7 @@ class _AddOperationState extends State<AddOperation> {
                     height: 55,
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: TextField(
                         controller: nameController,
                         onChanged: (value) {
@@ -212,7 +212,7 @@ class _AddOperationState extends State<AddOperation> {
                             checkFields();
                           });
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: 'Название', border: InputBorder.none),
                       ),
                     )),
@@ -224,7 +224,7 @@ class _AddOperationState extends State<AddOperation> {
                     height: 55,
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: TextField(
                         inputFormatters: [
                           FilteringTextInputFormatter(RegExp(r'\d*'),
@@ -237,7 +237,7 @@ class _AddOperationState extends State<AddOperation> {
                             checkFields();
                           });
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: 'Сумма', border: InputBorder.none),
                       ),
                     )),
@@ -253,12 +253,12 @@ class _AddOperationState extends State<AddOperation> {
                       height: 55,
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: Padding(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: TextField(
                           enabled: false,
                           decoration: InputDecoration(
                               labelText: getText(),
-                              labelStyle: TextStyle(color: Colors.black),
+                              labelStyle: const TextStyle(color: Colors.black),
                               border: InputBorder.none),
                         ),
                       )),
@@ -275,22 +275,22 @@ class _AddOperationState extends State<AddOperation> {
                       height: 55,
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: Padding(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             selectedItem == null
-                                ? Text(
+                                ? const Text(
                                     'Категория',
                                     style: TextStyle(fontSize: 17),
                                   )
                                 : Padding(
-                                    padding: EdgeInsets.only(left: 5),
+                                    padding: const EdgeInsets.only(left: 5),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Align(
+                                        const Align(
                                           alignment: Alignment.centerLeft,
                                           child: Padding(
                                             padding: EdgeInsets.only(top: 3),
@@ -302,12 +302,12 @@ class _AddOperationState extends State<AddOperation> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                               selectedItem!['name'] ?? '',
-                                              style: TextStyle(fontSize: 17)),
+                                              style: const TextStyle(fontSize: 17)),
                                         ),
                                       ],
                                     ),
                                   ),
-                            Align(
+                            const Align(
                               alignment: Alignment.centerRight,
                               child: Icon(Icons.arrow_downward),
                             )
@@ -320,7 +320,7 @@ class _AddOperationState extends State<AddOperation> {
           ),
         ),
         floatingActionButton: Padding(
-          padding: EdgeInsets.only(left: 25),
+          padding: const EdgeInsets.only(left: 25),
           child: Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(

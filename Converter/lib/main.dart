@@ -21,12 +21,12 @@ class MyApp extends StatelessWidget {
       initialRoute: '/home',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/home': (context) => Home(),
-        '/weight': (context) => Weight(),
-        '/length': (context) => Length(),
-        '/exchange': (context) => Exchange(),
-        '/temp': (context) => Temperature(),
-        '/square': (context) => Square(),
+        '/home': (context) => const Home(),
+        '/weight': (context) => const Weight(),
+        '/length': (context) => const Length(),
+        '/exchange': (context) => const Exchange(),
+        '/temp': (context) => const Temperature(),
+        '/square': (context) => const Square(),
       },
     );
   }

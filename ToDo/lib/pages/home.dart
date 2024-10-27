@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 157, 101, 194),
         appBar: AppBar(
-            title: Text('ToDo', style: TextStyle(color: Colors.white)),
+            title: const Text('ToDo', style: TextStyle(color: Colors.white)),
             actions: [
               IconButton(
                 onPressed: () {
@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
                     filtered = getList();
                   });
                 },
-                icon: FaIcon(FontAwesomeIcons.filter),
+                icon: const FaIcon(FontAwesomeIcons.filter),
                 color: filterColor,
               )
             ],
@@ -81,7 +81,7 @@ class _HomeState extends State<Home> {
                 children: [
                   Expanded(
                       child: ListView.separated(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     itemCount: filtered.length,
                     itemBuilder: (BuildContext context, int index) {
                       
@@ -96,7 +96,7 @@ class _HomeState extends State<Home> {
                                 borderRadius: BorderRadius.circular(20),
                                 color: const Color.fromARGB(72, 103, 56, 134)),
                             child: Padding(
-                              padding: EdgeInsets.only(left: 15),
+                              padding: const EdgeInsets.only(left: 15),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -107,8 +107,8 @@ class _HomeState extends State<Home> {
                                       Transform.scale(
                                         scale: 1.4,
                                         child: Checkbox(
-                                            side: BorderSide(
-                                                color: const Color.fromARGB(
+                                            side: const BorderSide(
+                                                color: Color.fromARGB(
                                                     255, 51, 51, 51),
                                                 width: 2),
                                             value: db.toDo[filtered[index]][1],
@@ -121,7 +121,7 @@ class _HomeState extends State<Home> {
                                             }),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(left: 15),
+                                        padding: const EdgeInsets.only(left: 15),
                                         child: Container(
                                           constraints: BoxConstraints(
                                               maxWidth: MediaQuery.of(context)
@@ -131,7 +131,7 @@ class _HomeState extends State<Home> {
                                           child: IntrinsicHeight(
                                             child: Text(
                                               db.toDo[filtered[index]][0],
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16),
                                               maxLines: full[index] ? null : 3,
@@ -153,7 +153,7 @@ class _HomeState extends State<Home> {
                                                 'index': filtered[index]
                                               });
                                         },
-                                        icon: FaIcon(FontAwesomeIcons.edit),
+                                        icon: const FaIcon(FontAwesomeIcons.edit),
                                         color: const Color.fromARGB(
                                             255, 51, 51, 51),
                                       )
@@ -181,7 +181,7 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       Navigator.pushNamed(context, '/add');
                     },
-                    icon: FaIcon(FontAwesomeIcons.circlePlus)))
+                    icon: const FaIcon(FontAwesomeIcons.circlePlus)))
           ],
         ));
   }

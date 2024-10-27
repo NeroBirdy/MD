@@ -49,10 +49,10 @@ class _EditState extends State<Edit> {
         backgroundColor: const Color.fromARGB(255, 157, 101, 194),
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(72, 103, 56, 134),
-          title: Text('Edit ToDo', style: TextStyle(color: Colors.white)),
+          title: const Text('Edit ToDo', style: TextStyle(color: Colors.white)),
           leading: IconButton(
               onPressed: () => {Navigator.pushNamed(context, '/home')},
-              icon: FaIcon(
+              icon: const FaIcon(
                 FontAwesomeIcons.arrowLeft,
                 color: Colors.black,
               )),
@@ -70,7 +70,7 @@ class _EditState extends State<Edit> {
                       db.update();
                       Navigator.pushNamed(context, '/home');
                     },
-                    icon: FaIcon(FontAwesomeIcons.trash))),
+                    icon: const FaIcon(FontAwesomeIcons.trash))),
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -82,12 +82,12 @@ class _EditState extends State<Edit> {
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   width: 2,
                                   color: Color.fromARGB(255, 109, 72, 133))),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   width: 2,
                                   color: Color.fromARGB(255, 52, 30, 66)))),
                       onChanged: (value) {
@@ -106,7 +106,7 @@ class _EditState extends State<Edit> {
                         Navigator.pushNamed(context, '/home',
                             arguments: {'routeBefore': 'edit'});
                       },
-                      icon: FaIcon(FontAwesomeIcons.solidCircleCheck))
+                      icon: const FaIcon(FontAwesomeIcons.solidCircleCheck))
                 ],
               ),
             ),

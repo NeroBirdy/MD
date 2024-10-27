@@ -17,7 +17,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('mybox');
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -28,11 +28,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Product Reference',
-      home: ProductList(),
+      home: const ProductList(),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/select': (context) => SelectProduct(),
-        '/home': (context) => ProductList()
+        '/select': (context) => const SelectProduct(),
+        '/home': (context) => const ProductList()
       },
     );
   }
@@ -60,7 +60,7 @@ class _ProductListState extends State<ProductList> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.greenAccent,
-        title: Text('Справочник продуктов'),
+        title: const Text('Справочник продуктов'),
         automaticallyImplyLeading: false,
       ),
       body: Column(
@@ -68,14 +68,14 @@ class _ProductListState extends State<ProductList> {
         children: [
           Expanded(
               child: ListView.builder(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   itemCount: 3,
                   itemBuilder: (context, index) {
                     Map values = {
                       'time': 'Breakfast',
                       'calories': 0,
                       'text': 'Завтрак',
-                      'icon': FaIcon(FontAwesomeIcons.egg),
+                      'icon': const FaIcon(FontAwesomeIcons.egg),
                       'list': db.breakfast
                     };
                     double temp = 0;
@@ -84,13 +84,13 @@ class _ProductListState extends State<ProductList> {
                       values['calories'] = temp.toString();
                       values['time'] = 'Lunch';
                       values['text'] = 'Обед';
-                      values['icon'] = FaIcon(FontAwesomeIcons.apple);
+                      values['icon'] = const FaIcon(FontAwesomeIcons.apple);
                       values['list'] = db.lunch;
                     } else if (index == 2) {
                       values['calories'] = temp.toString();
                       values['time'] = 'Dinner';
                       values['text'] = 'Ужин';
-                      values['icon'] = FaIcon(FontAwesomeIcons.bowlFood);
+                      values['icon'] = const FaIcon(FontAwesomeIcons.bowlFood);
                       values['list'] = db.dinner;
                     }
                     for (int i = 0; i < values['list'].length; i++) {
@@ -100,13 +100,13 @@ class _ProductListState extends State<ProductList> {
                     values['calories'] = temp.toString();
 
                     return Container(
-                      margin: EdgeInsets.symmetric(vertical: 8),
+                      margin: const EdgeInsets.symmetric(vertical: 8),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                            color: const Color.fromARGB(80, 0, 0, 0),
+                            color: Color.fromARGB(80, 0, 0, 0),
                             blurRadius: 6,
                             offset: Offset(0, 2),
                           ),
@@ -126,10 +126,10 @@ class _ProductListState extends State<ProductList> {
                               children: [
                                 Text(values['text']),
                                 Padding(
-                                    padding: EdgeInsets.only(left: 60),
+                                    padding: const EdgeInsets.only(left: 60),
                                     child: Text('${values['calories']} Ккал')),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 5),
+                                  padding: const EdgeInsets.only(left: 5),
                                   child: IconButton(
                                     onPressed: () {
                                       Navigator.pushNamed(context, '/select',
@@ -138,7 +138,7 @@ class _ProductListState extends State<ProductList> {
                                             'text': values['text']
                                           });
                                     },
-                                    icon: FaIcon(
+                                    icon: const FaIcon(
                                       FontAwesomeIcons.plus,
                                       color: Color.fromARGB(255, 59, 114, 61),
                                     ),
@@ -149,7 +149,7 @@ class _ProductListState extends State<ProductList> {
                             children: [
                               ListView.builder(
                                 shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount: values['list'].length,
                                 itemBuilder: (context, index) {
                                   return Stack(
@@ -166,7 +166,7 @@ class _ProductListState extends State<ProductList> {
                                                 child: Text(
                                                     '${values['list'][index]['grams']} г'),
                                               ),
-                                              Divider()
+                                              const Divider()
                                             ],
                                           )),
                                       Positioned(
@@ -174,7 +174,7 @@ class _ProductListState extends State<ProductList> {
                                           right: 110,
                                           child: Text(
                                             '${values['list'][index]['calories'].toString()} Ккал',
-                                            style: TextStyle(fontSize: 16),
+                                            style: const TextStyle(fontSize: 16),
                                           )),
                                       Positioned(
                                           right: 25,
@@ -187,7 +187,7 @@ class _ProductListState extends State<ProductList> {
                                                     values['list'], false);
                                               });
                                             },
-                                            icon: FaIcon(
+                                            icon: const FaIcon(
                                               FontAwesomeIcons.minus,
                                               color: Color.fromARGB(
                                                   255, 185, 82, 82),

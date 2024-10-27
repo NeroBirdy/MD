@@ -20,7 +20,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('mybox');
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -32,10 +32,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bad News',
-      home: News(),
+      home: const News(),
       routes: {
-        '/home': (context) => News(),
-        '/description': (context) => Description()
+        '/home': (context) => const News(),
+        '/description': (context) => const Description()
       },
     );
   }
@@ -80,7 +80,7 @@ class _NewsState extends State<News> {
     setState(() {
       news = db.news;
       List tmp = news.where((item) => item['news_of_the_day']).toList();
-      if (tmp.length != 0) {
+      if (tmp.isNotEmpty) {
         checkFile(tmp[0]['image']);
       }
       sortNews();
@@ -177,20 +177,20 @@ class _NewsState extends State<News> {
 
   void getFiltered() {
     filtered = [];
-    if (filteredDate.length != 0 && filteredTags.length != 0) {
+    if (filteredDate.isNotEmpty && filteredTags.isNotEmpty) {
       for (int i = 0; i < news.length; i++) {
         if (filteredDate.contains(dates[i].substring(0, 10)) &&
             filteredTags.contains(news[i]['tag'])) {
           filtered.add({'list': news[i], 'date': dates[i]});
         }
       }
-    } else if (filteredDate.length != 0) {
+    } else if (filteredDate.isNotEmpty) {
       for (int i = 0; i < news.length; i++) {
         if (filteredDate.contains(dates[i].substring(0, 10))) {
           filtered.add({'list': news[i], 'date': dates[i]});
         }
       }
-    } else if (filteredTags.length != 0) {
+    } else if (filteredTags.isNotEmpty) {
       for (int i = 0; i < news.length; i++) {
         if (filteredTags.contains(news[i]['tag'])) {
           filtered.add({'list': news[i], 'date': dates[i]});
@@ -230,7 +230,7 @@ class _NewsState extends State<News> {
       itemBuilder: (context) {
         return [
           PopupMenuItem(
-              child: Container(
+              child: SizedBox(
             height: arr.length > 5 ? 270 : null,
             child: SingleChildScrollView(
               child: Column(
@@ -265,7 +265,7 @@ class _NewsState extends State<News> {
   }
 
   Future refresh() async {
-    await Future.delayed(Duration(seconds: 1, microseconds: 500));
+    await Future.delayed(const Duration(seconds: 1, microseconds: 500));
     setState(() {
       reversed = false;
       fetchData();
@@ -289,7 +289,7 @@ class _NewsState extends State<News> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('News'),
+            const Text('News'),
             Row(
               children: [
                 IconButton(
@@ -306,7 +306,7 @@ class _NewsState extends State<News> {
                           : const Color.fromARGB(255, 98, 172, 100),
                     )),
                 getPopUpMenu(datesForFilteredDate, filteredDate),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 getPopUpMenu(tags, filteredTags)
@@ -315,7 +315,7 @@ class _NewsState extends State<News> {
           ],
         ),
       ),
-      body: RefreshIndicator(child: Column(
+      body: RefreshIndicator(onRefresh: refresh, child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
@@ -339,7 +339,7 @@ class _NewsState extends State<News> {
                       child: CircularProgressIndicator(),
                     ))
         ],
-      ), onRefresh: refresh)
+      ))
     );
   }
 
@@ -355,19 +355,19 @@ class _NewsState extends State<News> {
       return Stack(
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 30),
+            padding: const EdgeInsets.only(bottom: 30),
             child: SizedBox(
               width: double.infinity,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Card(
                     color: const Color.fromARGB(121, 211, 210, 210),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -375,7 +375,7 @@ class _NewsState extends State<News> {
                                   child: Text(
                                     textAlign: TextAlign.left,
                                     filtered[index]['list']['name'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16.5),
                                     overflow: TextOverflow.ellipsis,
@@ -386,14 +386,14 @@ class _NewsState extends State<News> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Expanded(
                                     child: Text(
                                   filtered[index]['list']['description'],
-                                  style: TextStyle(fontSize: 15.5),
+                                  style: const TextStyle(fontSize: 15.5),
                                   textAlign: TextAlign.left,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
@@ -412,7 +412,7 @@ class _NewsState extends State<News> {
             left: 20,
             child: Text(
               filtered[index]['date'],
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
           ),
           Positioned(
@@ -420,7 +420,7 @@ class _NewsState extends State<News> {
             bottom: 10,
             child: Text(
               '#${filtered[index]['list']['tag']}',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
           )
         ],
@@ -430,11 +430,11 @@ class _NewsState extends State<News> {
         future: checkFile(filtered[index]['list']['image']),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
-            return Text('Ошибка загрузки изображения');
+            return const Text('Ошибка загрузки изображения');
           } else if (snapshot.hasData) {
             String imagePath = snapshot.data ?? '';
 
@@ -445,23 +445,23 @@ class _NewsState extends State<News> {
                     SizedBox(
                         width: double.infinity,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Card(
                             color: const Color.fromARGB(169, 245, 244, 244),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20),
+                              padding: const EdgeInsets.symmetric(vertical: 20),
                               child: AspectRatio(
                                 aspectRatio: 16 / 9,
                                 child: Padding(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                        const EdgeInsets.symmetric(horizontal: 10),
                                     child: Image.file(File(imagePath))),
                               ),
                             ),
                           ),
                         )),
                     Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: Stack(
                           children: [
                             Row(
@@ -472,16 +472,16 @@ class _NewsState extends State<News> {
                                     child: Text(
                                       textAlign: TextAlign.left,
                                       filtered[index]['list']['name'],
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16.5),
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 3,
                                     )),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
-                                Expanded(
+                                const Expanded(
                                   flex: 1,
                                   child: SizedBox(),
                                 )
@@ -492,21 +492,21 @@ class _NewsState extends State<News> {
                                 right: 2,
                                 child: Text(
                                   filtered[index]['date'].substring(0, 10),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
                                 ))
                           ],
                         )),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Expanded(
                               child: Text(
                             filtered[index]['list']['description'],
-                            style: TextStyle(fontSize: 15.5),
+                            style: const TextStyle(fontSize: 15.5),
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
@@ -514,7 +514,7 @@ class _NewsState extends State<News> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     )
                   ],
@@ -522,7 +522,7 @@ class _NewsState extends State<News> {
               ],
             );
           } else {
-            return Text('Изображеие не найдено');
+            return const Text('Изображеие не найдено');
           }
         },
       );

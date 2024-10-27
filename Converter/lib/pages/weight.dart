@@ -62,25 +62,25 @@ class _WeightState extends State<Weight> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           'Weight',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
             onPressed: () => {Navigator.pushNamed(context, '/home')},
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.arrowLeft,
               color: Colors.indigo,
             )),
       ),
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             Row(
               children: [
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: SizedBox(
                       width: 250,
                       child: TextField(
@@ -97,7 +97,7 @@ class _WeightState extends State<Weight> {
                           })
                         },
                         decoration:
-                            InputDecoration(border: OutlineInputBorder()),
+                            const InputDecoration(border: OutlineInputBorder()),
                       ),
                     )),
                 DropdownMenu(
@@ -116,7 +116,7 @@ class _WeightState extends State<Weight> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
               child: Card(
                   color: const Color.fromARGB(255, 180, 180, 180),
                   child: SizedBox(
@@ -125,13 +125,13 @@ class _WeightState extends State<Weight> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
                             conversion(typed, 'g').toString(),
-                            style: TextStyle(fontSize: 30),
+                            style: const TextStyle(fontSize: 30),
                           ),
                         ),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: Text(' g', style: TextStyle(fontSize: 30)),
                         )
@@ -140,7 +140,7 @@ class _WeightState extends State<Weight> {
                   )),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: Card(
                   color: const Color.fromARGB(255, 180, 180, 180),
                   child: SizedBox(
@@ -149,13 +149,13 @@ class _WeightState extends State<Weight> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                             conversion(typed, 'kg').toString(),
-                            style: TextStyle(fontSize: 30),
+                            style: const TextStyle(fontSize: 30),
                           ),
                         ),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Text('kg', style: TextStyle(fontSize: 30)),
                         )
@@ -171,13 +171,13 @@ class _WeightState extends State<Weight> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           conversion(typed, 'c').toString(),
-                          style: TextStyle(fontSize: 30),
+                          style: const TextStyle(fontSize: 30),
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Text('c', style: TextStyle(fontSize: 30)),
                       )
@@ -192,13 +192,13 @@ class _WeightState extends State<Weight> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           conversion(typed, 'f').toString(),
-                          style: TextStyle(fontSize: 30),
+                          style: const TextStyle(fontSize: 30),
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Text('f', style: TextStyle(fontSize: 30)),
                       )

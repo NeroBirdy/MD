@@ -29,10 +29,10 @@ class _AddState extends State<Add> {
       backgroundColor: const Color.fromARGB(255, 157, 101, 194),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(72, 103, 56, 134),
-        title: Text('Add ToDo', style: TextStyle(color: Colors.white)),
+        title: const Text('Add ToDo', style: TextStyle(color: Colors.white)),
         leading: IconButton(
             onPressed: () => {Navigator.pushNamed(context, '/home')},
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.arrowLeft,
               color: Colors.black,
             )),
@@ -47,12 +47,12 @@ class _AddState extends State<Add> {
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 2,
                             color: Color.fromARGB(255, 109, 72, 133))),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 2, color: Color.fromARGB(255, 52, 30, 66)))),
                 onChanged: (value) {
                   setState(() {
@@ -62,7 +62,7 @@ class _AddState extends State<Add> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 30),
+              padding: const EdgeInsets.only(left: 30),
               child: IconButton(
                   iconSize: 50,
                   color: const Color.fromARGB(248, 94, 57, 124),
@@ -73,7 +73,7 @@ class _AddState extends State<Add> {
                     }
                     Navigator.pushNamed(context, '/home');
                   },
-                  icon: FaIcon(FontAwesomeIcons.circlePlus)),
+                  icon: const FaIcon(FontAwesomeIcons.circlePlus)),
             )
           ],
         ),

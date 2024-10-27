@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Calendar',
       debugShowCheckedModeBanner: false,
-      home: const Calendar(),
+      home: Calendar(),
     );
   }
 }
@@ -44,7 +44,7 @@ class _CalendarState extends State<Calendar> {
               selected = DateTime.now();
             });
           },
-          icon: FaIcon(FontAwesomeIcons.backward));
+          icon: const FaIcon(FontAwesomeIcons.backward));
     }
 
     Widget getYearAndMonth() {
@@ -65,7 +65,7 @@ class _CalendarState extends State<Calendar> {
                   selected = DateTime(selected.year, selected.month - 1);
                 });
               },
-              icon: FaIcon(FontAwesomeIcons.arrowLeft)),
+              icon: const FaIcon(FontAwesomeIcons.arrowLeft)),
           Column(
             children: [
               TextButton(
@@ -73,7 +73,7 @@ class _CalendarState extends State<Calendar> {
                     showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {
-                        return Container(
+                        return SizedBox(
                           height: 200,
                           child: ListView.builder(
                             itemCount: 100,
@@ -109,14 +109,14 @@ class _CalendarState extends State<Calendar> {
                   },
                   child: Text(
                     textYear,
-                    style: TextStyle(color: Colors.black, fontSize: 20),
+                    style: const TextStyle(color: Colors.black, fontSize: 20),
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 0,
               ),
               Text(
                 textMonth,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 25),
@@ -129,7 +129,7 @@ class _CalendarState extends State<Calendar> {
                   selected = DateTime(selected.year, selected.month + 1);
                 });
               },
-              icon: FaIcon(FontAwesomeIcons.arrowRight)),
+              icon: const FaIcon(FontAwesomeIcons.arrowRight)),
         ],
       );
     }
@@ -142,8 +142,8 @@ class _CalendarState extends State<Calendar> {
         children: days
             .map((item) => Text(
                   item,
-                  style: TextStyle(
-                      color: const Color.fromARGB(255, 245, 179, 93),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 245, 179, 93),
                       fontSize: 19),
                 ))
             .toList(),
@@ -171,7 +171,7 @@ class _CalendarState extends State<Calendar> {
               child: Center(
                 child: Text(
                   '$day',
-                  style: TextStyle(color: Colors.white, fontSize: 17),
+                  style: const TextStyle(color: Colors.white, fontSize: 17),
                 ),
               )),
         ),
@@ -212,14 +212,14 @@ class _CalendarState extends State<Calendar> {
 
       return GridView.count(
           crossAxisCount: 7,
-          children: grid,
-          physics: NeverScrollableScrollPhysics());
+          physics: const NeverScrollableScrollPhysics(),
+          children: grid);
     }
 
     return Scaffold(
       appBar: AppBar(
         actions: [getBack()],
-        title: Text(
+        title: const Text(
           'Calendar',
           style: TextStyle(color: Colors.white),
         ),

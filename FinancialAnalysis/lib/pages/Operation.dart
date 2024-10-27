@@ -48,7 +48,7 @@ class _OperationState extends State<Operation> {
                 'mode': mode
               });
             },
-            icon: Icon(Icons.arrow_back)),
+            icon: const Icon(Icons.arrow_back)),
         backgroundColor: Colors.white,
         title: Text(arr[0]['category']),
       ),
@@ -59,7 +59,7 @@ class _OperationState extends State<Operation> {
                 child: ListView.separated(
               itemCount: arr.length,
               separatorBuilder: (context, index) {
-                return Divider(
+                return const Divider(
                   endIndent: 15,
                   indent: 55,
                   thickness: 1,
@@ -73,17 +73,17 @@ class _OperationState extends State<Operation> {
                       isDismissible: true,
                       enableDrag: true,
                       builder: (context) {
-                        return Container(
+                        return SizedBox(
                             height: 180,
                             child: Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: Column(
                                 children: [
                                   const Icon(
                                     Icons.horizontal_rule,
                                     size: 40,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15,
                                   ),
                                   Column(
@@ -106,7 +106,7 @@ class _OperationState extends State<Operation> {
                                           child: Container(
                                             color: Colors.transparent,
                                             width: double.infinity,
-                                            child: Row(
+                                            child: const Row(
                                               children: [
                                                 Icon(
                                                   Icons.edit,
@@ -124,7 +124,7 @@ class _OperationState extends State<Operation> {
                                               ],
                                             ),
                                           )),
-                                      Divider(
+                                      const Divider(
                                         indent: 65,
                                         endIndent: 20,
                                       ),
@@ -165,7 +165,7 @@ class _OperationState extends State<Operation> {
                                         child: Container(
                                           color: Colors.transparent,
                                           width: double.infinity,
-                                          child: Row(
+                                          child: const Row(
                                             children: [
                                               Icon(
                                                 Icons.delete,
@@ -200,19 +200,19 @@ class _OperationState extends State<Operation> {
                       children: [
                         Text(
                           arr[index]['name'],
-                          style: TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 18),
                         ),
                         Text(
-                          arr[index]['money'].toString() + '₽',
-                          style: TextStyle(fontSize: 18),
+                          '${arr[index]['money']}₽',
+                          style: const TextStyle(fontSize: 18),
                         )
                       ],
                     ),
                     subtitle: Text(
                       arr[index]['date'].toString().substring(0, 10),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 14,
-                          color: const Color.fromARGB(255, 87, 86, 83)),
+                          color: Color.fromARGB(255, 87, 86, 83)),
                     ),
                   ),
                 );

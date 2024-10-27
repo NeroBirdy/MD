@@ -24,7 +24,7 @@ class _SelectProductState extends State<SelectProduct> {
   List choosen = [];
 
   void Search(String text) {
-    final regex = RegExp('^' + text, caseSensitive: false);
+    final regex = RegExp('^$text', caseSensitive: false);
     setState(() {
       filtered = db.product.where((item) {
         return regex.hasMatch(item['name']);
@@ -75,7 +75,7 @@ class _SelectProductState extends State<SelectProduct> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    icon: FaIcon(
+                    icon: const FaIcon(
                       FontAwesomeIcons.close,
                       color: Colors.black,
                     )),
@@ -102,7 +102,7 @@ class _SelectProductState extends State<SelectProduct> {
                               ],
                               onChanged: (value) {
                                 setState(() {
-                                  if (controller.text.length == 0) {
+                                  if (controller.text.isEmpty) {
                                     textCalories = '0';
                                   } else {
                                     textCalories = (filtered[index]
@@ -114,7 +114,7 @@ class _SelectProductState extends State<SelectProduct> {
                                 });
                               },
                               controller: controller,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.all(5),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(
@@ -125,22 +125,22 @@ class _SelectProductState extends State<SelectProduct> {
                               // keyboardType: TextInputType.number,
                             ),
                           ),
-                          Text('грамм')
+                          const Text('грамм')
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [Text(textCalories), Text('Ккал')],
+                        children: [Text(textCalories), const Text('Ккал')],
                       )
                     ],
                   ),
                 );
               },
             ),
-            actionsPadding: EdgeInsets.only(right: 5),
+            actionsPadding: const EdgeInsets.only(right: 5),
             actions: [
               IconButton(
                   onPressed: () {
@@ -153,7 +153,7 @@ class _SelectProductState extends State<SelectProduct> {
                     });
                     Navigator.of(context).pop();
                   },
-                  icon: FaIcon(
+                  icon: const FaIcon(
                     FontAwesomeIcons.check,
                     color: Colors.greenAccent,
                   )),
@@ -185,24 +185,24 @@ class _SelectProductState extends State<SelectProduct> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   },
-                  icon: FaIcon(FontAwesomeIcons.arrowLeft)),
+                  icon: const FaIcon(FontAwesomeIcons.arrowLeft)),
               Text(
                 args['text']!,
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
               IconButton(
                   onPressed: () {
                     db.updateFood(time, choosen, true);
                     Navigator.pushNamed(context, '/home');
                   },
-                  icon: FaIcon(FontAwesomeIcons.check))
+                  icon: const FaIcon(FontAwesomeIcons.check))
             ],
           )),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
         backgroundColor: Colors.greenAccent,
-        titleTextStyle: TextStyle(fontSize: 13, color: Colors.black),
+        titleTextStyle: const TextStyle(fontSize: 13, color: Colors.black),
         title: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -218,7 +218,7 @@ class _SelectProductState extends State<SelectProduct> {
                     });
                   },
                   textAlign: TextAlign.center,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     contentPadding: EdgeInsets.all(5),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
@@ -228,10 +228,10 @@ class _SelectProductState extends State<SelectProduct> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 11,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
@@ -281,10 +281,10 @@ class _SelectProductState extends State<SelectProduct> {
                                     alignment: Alignment.topLeft,
                                     child: Padding(
                                       padding:
-                                          EdgeInsets.only(left: 15, top: 7),
+                                          const EdgeInsets.only(left: 15, top: 7),
                                       child: Text(
                                         filtered[index]['name'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -292,11 +292,11 @@ class _SelectProductState extends State<SelectProduct> {
                                   Align(
                                       alignment: Alignment.topLeft,
                                       child: Padding(
-                                        padding: EdgeInsets.only(left: 15),
+                                        padding: const EdgeInsets.only(left: 15),
                                         child: Text(
                                           textAlign: TextAlign.left,
                                           filtered[index]['description'],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 10),
                                         ),
@@ -306,12 +306,12 @@ class _SelectProductState extends State<SelectProduct> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.only(
+                                        padding: const EdgeInsets.only(
                                             left: 60, right: 80, bottom: 4),
                                         child: Text(
                                           filtered[index]['calories']
                                               .toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -320,7 +320,7 @@ class _SelectProductState extends State<SelectProduct> {
                                       Text(filtered[index]['fats'].toString()),
                                       Text(filtered[index]['carbohydrates']
                                           .toString()),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 40,
                                       )
                                     ],
@@ -354,10 +354,10 @@ class _SelectProductState extends State<SelectProduct> {
                                   },
                                   icon: !choosen.any((item) =>
                                           item['id'] == filtered[index]['id'])
-                                      ? FaIcon(FontAwesomeIcons.plus,
+                                      ? const FaIcon(FontAwesomeIcons.plus,
                                           color:
                                               Color.fromARGB(255, 59, 114, 61))
-                                      : FaIcon(FontAwesomeIcons.minus,
+                                      : const FaIcon(FontAwesomeIcons.minus,
                                           color: Color.fromARGB(
                                               255, 185, 82, 82))),
                             ),

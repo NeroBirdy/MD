@@ -51,29 +51,29 @@ class _TemperatureState extends State<Temperature> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           'Temperature',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
             onPressed: () => {Navigator.pushNamed(context, '/home')},
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.arrowLeft,
               color: Colors.indigo,
             )),
       ),
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             Row(
               children: [
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: SizedBox(
                       width: 250,
                       child: TextField(
-                        inputFormatters: [
+                        inputFormatters: const [
                           // FilteringTextInputFormatter(RegExp(r'^-?\d+(\.\d+)?'),
                           //     allow: true),
                         ],
@@ -92,7 +92,7 @@ class _TemperatureState extends State<Temperature> {
                           })
                         },
                         decoration:
-                            InputDecoration(border: OutlineInputBorder()),
+                            const InputDecoration(border: OutlineInputBorder()),
                       ),
                     )),
                 DropdownMenu(
@@ -111,7 +111,7 @@ class _TemperatureState extends State<Temperature> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
               child: Card(
                   color: const Color.fromARGB(255, 180, 180, 180),
                   child: SizedBox(
@@ -120,26 +120,26 @@ class _TemperatureState extends State<Temperature> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                             conversion(typed, '°C').toString(),
-                            style: TextStyle(fontSize: 30),
+                            style: const TextStyle(fontSize: 30),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                               conversion(typed, '°C').toString() != 'error'
                                   ? '°C'
                                   : '',
-                              style: TextStyle(fontSize: 30)),
+                              style: const TextStyle(fontSize: 30)),
                         )
                       ],
                     ),
                   )),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: Card(
                   color: const Color.fromARGB(255, 180, 180, 180),
                   child: SizedBox(
@@ -148,19 +148,19 @@ class _TemperatureState extends State<Temperature> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                             conversion(typed, '℉').toString(),
-                            style: TextStyle(fontSize: 30),
+                            style: const TextStyle(fontSize: 30),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                               conversion(typed, '°C').toString() != 'error'
                                   ? '℉'
                                   : '',
-                              style: TextStyle(fontSize: 30)),
+                              style: const TextStyle(fontSize: 30)),
                         )
                       ],
                     ),
@@ -174,19 +174,19 @@ class _TemperatureState extends State<Temperature> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           conversion(typed, 'K').toString(),
-                          style: TextStyle(fontSize: 30),
+                          style: const TextStyle(fontSize: 30),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                             conversion(typed, '°C').toString() != 'error'
                                 ? 'K'
                                 : '',
-                            style: TextStyle(fontSize: 30)),
+                            style: const TextStyle(fontSize: 30)),
                       )
                     ],
                   ),

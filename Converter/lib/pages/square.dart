@@ -47,29 +47,29 @@ class _SquareState extends State<Square> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           'Square',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
             onPressed: () => {Navigator.pushNamed(context, '/home')},
-            icon: FaIcon(
+            icon: const FaIcon(
               FontAwesomeIcons.arrowLeft,
               color: Colors.indigo,
             )),
       ),
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             Row(
               children: [
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: SizedBox(
                       width: 250,
                       child: TextField(
-                        inputFormatters: [
+                        inputFormatters: const [
                           // FilteringTextInputFormatter(RegExp(r'^-?\d+(\.\d+)?'),
                           //     allow: true),
                         ],
@@ -88,7 +88,7 @@ class _SquareState extends State<Square> {
                           })
                         },
                         decoration:
-                            InputDecoration(border: OutlineInputBorder()),
+                            const InputDecoration(border: OutlineInputBorder()),
                       ),
                     )),
                 DropdownMenu(
@@ -107,7 +107,7 @@ class _SquareState extends State<Square> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
               child: Card(
                   color: const Color.fromARGB(255, 180, 180, 180),
                   child: SizedBox(
@@ -116,13 +116,13 @@ class _SquareState extends State<Square> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                             conversion(typed, 'cm²').toString(),
-                            style: TextStyle(fontSize: 30),
+                            style: const TextStyle(fontSize: 30),
                           ),
                         ),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Text('cm²', style: TextStyle(fontSize: 30)),
                         )
@@ -131,7 +131,7 @@ class _SquareState extends State<Square> {
                   )),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: Card(
                   color: const Color.fromARGB(255, 180, 180, 180),
                   child: SizedBox(
@@ -140,13 +140,13 @@ class _SquareState extends State<Square> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                             conversion(typed, 'd²').toString(),
-                            style: TextStyle(fontSize: 30),
+                            style: const TextStyle(fontSize: 30),
                           ),
                         ),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Text('d²', style: TextStyle(fontSize: 30)),
                         )
@@ -162,13 +162,13 @@ class _SquareState extends State<Square> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           conversion(typed, 'm²').toString(),
-                          style: TextStyle(fontSize: 30),
+                          style: const TextStyle(fontSize: 30),
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Text('m²', style: TextStyle(fontSize: 30)),
                       )

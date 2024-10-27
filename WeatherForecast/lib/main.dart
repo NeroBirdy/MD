@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Weather Forecast',
         home: Weather());
@@ -107,18 +107,17 @@ class _WeatherState extends State<Weather> {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
       Expanded(
           child: Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(label, style: TextStyle(color: Colors.white)))),
+              padding: const EdgeInsets.only(left: 20),
+              child: Text(label, style: const TextStyle(color: Colors.white)))),
       Expanded(
           child: Row(children: [
         Image.network('http:' + data['condition']['icon'], height: 40),
         Padding(
-            padding: EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20),
             child: Text(
-                (data['temp_c'].toString()[0] != '-' ? '+' : '') +
-                    data['temp_c'].toStringAsFixed(0) +
-                    '°',
-                style: TextStyle(color: Colors.white)))
+                '${(data['temp_c'].toString()[0] != '-' ? '+' : '') +
+                    data['temp_c'].toStringAsFixed(0)}°',
+                style: const TextStyle(color: Colors.white)))
       ])),
       Expanded(
           child: Text((data['wind_kph'] / 3.6).toStringAsFixed(1) +
@@ -128,7 +127,7 @@ class _WeatherState extends State<Weather> {
                   : data['wind_dir']) +
               ' ')),
       Padding(
-          padding: EdgeInsets.only(right: 10), child: getIcon(windDirection))
+          padding: const EdgeInsets.only(right: 10), child: getIcon(windDirection))
     ]);
   }
 
@@ -138,7 +137,7 @@ class _WeatherState extends State<Weather> {
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Padding(
-              padding: EdgeInsets.only(left: 20, top: 15, bottom: 10),
+              padding: const EdgeInsets.only(left: 20, top: 15, bottom: 10),
               child: Text(data['weekDay'] + ', ' + data['d'] + '.' + data['m'],
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -152,17 +151,16 @@ class _WeatherState extends State<Weather> {
                   height: 35,
                 ),
                 Padding(
-                    padding: EdgeInsets.only(left: 10, right: 20),
+                    padding: const EdgeInsets.only(left: 10, right: 20),
                     child: Text(
-                      (data['day']['temp_c'].toString()[0] != '-' ? '+' : '') +
+                      '${(data['day']['temp_c'].toString()[0] != '-' ? '+' : '') +
                           data['day']['temp_c'].toStringAsFixed(0) +
                           '°' +
                           '/' +
                           (data['night']['temp_c'].toString()[0] != '-'
                               ? '+'
                               : '') +
-                          data['night']['temp_c'].toStringAsFixed(0) +
-                          '°',
+                          data['night']['temp_c'].toStringAsFixed(0)}°',
                       style: TextStyle(fontSize: (!full[index]) ? 18 : 16),
                     ))
               ],
@@ -196,19 +194,19 @@ class _WeatherState extends State<Weather> {
 
                 return SingleChildScrollView(
                     child: Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
-                                  padding: EdgeInsets.only(top: 20),
+                                  padding: const EdgeInsets.only(top: 20),
                                   child: Center(
                                       child: TextButton(
                                           onPressed: () {
                                             showModalBottomSheet(
                                               context: context,
                                               builder: (BuildContext context) {
-                                                return Container(
+                                                return SizedBox(
                                                     height: 280,
                                                     child: ListView.builder(
                                                       itemCount: 5,
@@ -218,7 +216,7 @@ class _WeatherState extends State<Weather> {
                                                         return ListTile(
                                                           title: Text(
                                                               cities[index],
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   color: Colors
                                                                       .black,
                                                                   fontSize: 24),
@@ -242,12 +240,12 @@ class _WeatherState extends State<Weather> {
                                             );
                                           },
                                           child: Text(city,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 24),
                                               textAlign: TextAlign.center)))),
                               Padding(
-                                  padding: EdgeInsets.only(top: 50),
+                                  padding: const EdgeInsets.only(top: 50),
                                   child: Card(
                                       color: const Color.fromARGB(
                                           186, 59, 92, 163),
@@ -269,7 +267,7 @@ class _WeatherState extends State<Weather> {
                                                                   .toStringAsFixed(
                                                                       0) +
                                                               '°',
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 60)),
@@ -280,9 +278,9 @@ class _WeatherState extends State<Weather> {
                                                           height: 60)
                                                     ]),
                                                 Padding(
-                                                    padding: EdgeInsets.only(
+                                                    padding: const EdgeInsets.only(
                                                         top: 10),
-                                                    child: Container(
+                                                    child: SizedBox(
                                                         height: 100,
                                                         child: ListView.builder(
                                                             controller: sc,
@@ -319,19 +317,19 @@ class _WeatherState extends State<Weather> {
                                                                             temp.toStringAsFixed(0) +
                                                                                 '°',
                                                                             style:
-                                                                                TextStyle(color: Colors.white)),
+                                                                                const TextStyle(color: Colors.white)),
                                                                         Text(
                                                                             time.toString().substring(11,
                                                                                 16),
                                                                             style:
-                                                                                TextStyle(color: Colors.white))
+                                                                                const TextStyle(color: Colors.white))
                                                                       ]));
                                                             })))
                                               ])))),
                               Padding(
-                                  padding: EdgeInsets.only(top: 25),
+                                  padding: const EdgeInsets.only(top: 25),
                                   child: Column(children: [
-                                    Padding(
+                                    const Padding(
                                         padding: EdgeInsets.only(left: 10),
                                         child: Row(
                                             mainAxisAlignment:
@@ -348,7 +346,7 @@ class _WeatherState extends State<Weather> {
                                     ListView.builder(
                                         padding: EdgeInsets.zero,
                                         shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
+                                        physics: const NeverScrollableScrollPhysics(),
                                         scrollDirection: Axis.vertical,
                                         itemCount: 14,
                                         itemBuilder:
@@ -411,7 +409,7 @@ class _WeatherState extends State<Weather> {
                                               },
                                               child: SizedBox(
                                                   child: Card(
-                                                      color: Color.fromARGB(
+                                                      color: const Color.fromARGB(
                                                           181, 93, 127, 199),
                                                       elevation: 0.6,
                                                       child: Column(
@@ -426,9 +424,9 @@ class _WeatherState extends State<Weather> {
                                   ]))
                             ])));
               } else if (snapshot.hasError) {
-                return Center(child: Text('Error'));
+                return const Center(child: Text('Error'));
               } else {
-                return Center(child: const CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             }));
   }

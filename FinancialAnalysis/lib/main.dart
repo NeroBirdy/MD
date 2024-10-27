@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Анализ финансов',
       routes: {
-        '/home': (context) => Financial(),
-        '/Category': (context) => Category(),
-        '/addCategory': (context) => AddCategory(),
-        '/addOperation': (context) => AddOperation(),
-        '/Operation': (context) => Operation()
+        '/home': (context) => const Financial(),
+        '/Category': (context) => const Category(),
+        '/addCategory': (context) => const AddCategory(),
+        '/addOperation': (context) => const AddOperation(),
+        '/Operation': (context) => const Operation()
       },
       initialRoute: '/home',
     );
@@ -162,9 +162,7 @@ class _FinancialState extends State<Financial> {
     }
     String monthText = DateFormat('MMMM', 'ru_RU').format(date);
     if (date.year < today.year) {
-      return monthText[0].toUpperCase() +
-          monthText.substring(1) +
-          ', ${date.year}';
+      return '${monthText[0].toUpperCase()}${monthText.substring(1)}, ${date.year}';
     }
     return monthText[0].toUpperCase() + monthText.substring(1);
   }
@@ -189,10 +187,10 @@ class _FinancialState extends State<Financial> {
           return Dialog(
               child: ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.8,
               height: 400,
-              child: Calendar(
+              child: const Calendar(
                 twoDates: true,
               ),
             ),
@@ -238,7 +236,7 @@ class _FinancialState extends State<Financial> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
@@ -255,7 +253,7 @@ class _FinancialState extends State<Financial> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
@@ -265,7 +263,7 @@ class _FinancialState extends State<Financial> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(right: 0),
+                    padding: const EdgeInsets.only(right: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -278,7 +276,7 @@ class _FinancialState extends State<Financial> {
                                 mode = false;
                               });
                             },
-                            child: Text('Расходы'),
+                            child: const Text('Расходы'),
                           ),
                         ),
                         Expanded(
@@ -290,7 +288,7 @@ class _FinancialState extends State<Financial> {
                                     mode = true;
                                   });
                                 },
-                                child: Text('Зачисления')))
+                                child: const Text('Зачисления')))
                       ],
                     ),
                   ),
@@ -327,8 +325,8 @@ class _FinancialState extends State<Financial> {
                             enableDrag: true,
                             builder: (context) {
                               return Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Container(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: SizedBox(
                                   height: 220,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -450,22 +448,22 @@ class _FinancialState extends State<Financial> {
                               );
                             });
                       },
-                      icon: Icon(Icons.more_horiz)))
+                      icon: const Icon(Icons.more_horiz)))
             ],
           ),
           backgroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      mode ? dSum.toString() + '₽' : eSum.toString() + '₽',
-                      style: TextStyle(fontSize: 20),
+                      mode ? '$dSum₽' : '$eSum₽',
+                      style: const TextStyle(fontSize: 20),
                     ),
                     period
                         ? SizedBox(
@@ -496,7 +494,7 @@ class _FinancialState extends State<Financial> {
                                         period = false;
                                       });
                                     },
-                                    child: Padding(
+                                    child: const Padding(
                                       padding: EdgeInsets.only(left: 5),
                                       child: Icon(Icons.close, size: 17),
                                     ),
@@ -505,7 +503,7 @@ class _FinancialState extends State<Financial> {
                               ),
                             ),
                           )
-                        : SizedBox(
+                        : const SizedBox(
                             height: 40,
                           )
                   ],
@@ -526,14 +524,14 @@ class _FinancialState extends State<Financial> {
                                 getSum();
                               });
                             },
-                            child: Icon(Icons.arrow_back),
+                            child: const Icon(Icons.arrow_back),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                     Expanded(
                         child: AspectRatio(
                       aspectRatio: period ? 1.15 : 1,
                       child: Container(
-                          margin: EdgeInsets.all(10),
+                          margin: const EdgeInsets.all(10),
                           child: Stack(
                             children: [
                               PieChart(
@@ -586,7 +584,7 @@ class _FinancialState extends State<Financial> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   getMonthName(firstDate!),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -609,14 +607,14 @@ class _FinancialState extends State<Financial> {
                                 getSum();
                               });
                             },
-                            child: Icon(Icons.arrow_forward),
+                            child: const Icon(Icons.arrow_forward),
                           )
                         : SizedBox(
                             width: period ? 0 : 24,
                           )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -650,13 +648,13 @@ class _FinancialState extends State<Financial> {
                             mode ? 'Добавить зачисления' : 'Добавить расходы'))
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
@@ -671,7 +669,7 @@ class _FinancialState extends State<Financial> {
                     ),
                     ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: mode
                           ? depositsCategoriesSum.length
                           : expensesCategoriesSum.length,
@@ -705,29 +703,29 @@ class _FinancialState extends State<Financial> {
                                         Icon(Icons.circle,
                                             color: Color(entry.value['color'])),
                                         Padding(
-                                          padding: EdgeInsets.only(left: 5),
+                                          padding: const EdgeInsets.only(left: 5),
                                           child: Text(
                                             entry.key.toString(),
-                                            style: TextStyle(fontSize: 17),
+                                            style: const TextStyle(fontSize: 17),
                                           ),
                                         )
                                       ],
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(right: 30),
+                                      padding: const EdgeInsets.only(right: 30),
                                       child: Text(
-                                        entry.value['sum'].toString() + '₽',
-                                        style: TextStyle(fontSize: 20),
+                                        '${entry.value['sum']}₽',
+                                        style: const TextStyle(fontSize: 20),
                                       ),
                                     )
                                   ],
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 32),
+                                  padding: const EdgeInsets.only(left: 32),
                                   child: Text(
                                       getOperationText(entry.value['count'])),
                                 ),
-                                Padding(
+                                const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 3),
                                   child: Divider(
                                     thickness: 1,
