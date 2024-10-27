@@ -21,7 +21,7 @@ class _AddOperationState extends State<AddOperation> {
   String money = '';
   DateTime date = DateTime.now();
   Map? selectedItem;
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
   DateTime? firstDate;
   DateTime? secondDate;
   bool? period;

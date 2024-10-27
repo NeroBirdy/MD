@@ -146,7 +146,7 @@ class _FinancialState extends State<Financial> {
     if (period) {
       int days = (firstDate == secondDate)
           ? 1
-          : secondDate!.difference(firstDate!).inDays;
+          : secondDate!.difference(firstDate!).inDays + 1;
       int lastDigit = days % 10;
       int lastTwoDigits = days % 100;
 
@@ -173,7 +173,7 @@ class _FinancialState extends State<Financial> {
     List first = firstDate.toString().substring(0, 10).split('-');
     List second = secondDate.toString().substring(0, 10).split('-');
     if (firstDate == secondDate) {
-      return '${first[2]}.${first[1]}.${first[0].substring(1, 3)}';
+      return '${first[2]}.${first[1]}.${first[0]}';
     }
     if (firstDate!.year != today.year || secondDate!.year != today.year) {
       return '${first[2]}.${first[1]}.${first[0].substring(2)} - ${second[2]}.${second[1]}.${second[0].substring(2)}';
