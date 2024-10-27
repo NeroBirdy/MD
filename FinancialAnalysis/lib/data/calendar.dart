@@ -19,7 +19,7 @@ class _CalendarState extends State<Calendar> {
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   DateTime secondDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  bool firstOrSecond = false;
+  bool firstOrSecond = true;
 
   @override
   Widget build(BuildContext context) {
