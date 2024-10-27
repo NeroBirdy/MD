@@ -83,6 +83,8 @@ class _AddOperationState extends State<AddOperation> {
         context: context,
         builder: (context) {
           return Dialog(
+              child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
             child: Container(
               width: MediaQuery.of(context).size.width * 0.8,
               height: 400,
@@ -90,7 +92,7 @@ class _AddOperationState extends State<AddOperation> {
                 twoDates: false,
               ),
             ),
-          );
+          ));
         });
     if (date != null) {
       selectedDate = date;
