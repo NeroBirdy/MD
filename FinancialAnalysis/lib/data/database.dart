@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class DataBase {
@@ -8,8 +9,8 @@ class DataBase {
   final myBox = Hive.box('mybox');
 
   void loadData() {
-    depositsCategories = myBox.get('depositsCategories', defaultValue: []);
-    expensesCategories = myBox.get('expensesCategories', defaultValue: []);
+    depositsCategories = myBox.get('depositsCategories', defaultValue: [{'name': 'Переводы от людей', 'color': Color.fromARGB(255, 107, 155, 52).value}]);
+    expensesCategories = myBox.get('expensesCategories', defaultValue: [{'name': 'Переводы людям', 'color': Color.fromARGB(255, 107, 155, 52).value}]);
     operations = myBox.get('Operations', defaultValue: []);
   }
 
