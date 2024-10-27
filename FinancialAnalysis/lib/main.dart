@@ -703,10 +703,12 @@ class _FinancialState extends State<Financial> {
                                         Icon(Icons.circle,
                                             color: Color(entry.value['color'])),
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 5),
+                                          padding:
+                                              const EdgeInsets.only(left: 5),
                                           child: Text(
                                             entry.key.toString(),
-                                            style: const TextStyle(fontSize: 17),
+                                            style:
+                                                const TextStyle(fontSize: 17),
                                           ),
                                         )
                                       ],

@@ -21,7 +21,8 @@ class _AddOperationState extends State<AddOperation> {
   String money = '';
   DateTime date = DateTime.now();
   Map? selectedItem;
-  DateTime selectedDate = DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
+  DateTime selectedDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   DateTime? firstDate;
   DateTime? secondDate;
   bool? period;
@@ -41,8 +42,7 @@ class _AddOperationState extends State<AddOperation> {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Container(
-            child: SingleChildScrollView(
+        return SingleChildScrollView(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             const Icon(
               Icons.horizontal_rule,
@@ -73,7 +73,7 @@ class _AddOperationState extends State<AddOperation> {
               );
             }),
           ]),
-        ));
+        );
       },
     );
   }
@@ -302,7 +302,8 @@ class _AddOperationState extends State<AddOperation> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                               selectedItem!['name'] ?? '',
-                                              style: const TextStyle(fontSize: 17)),
+                                              style: const TextStyle(
+                                                  fontSize: 17)),
                                         ),
                                       ],
                                     ),

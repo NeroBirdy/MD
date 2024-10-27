@@ -23,18 +23,6 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    Widget getBack() {
-      if (selected.year == today.year && selected.month == today.month) {
-        return Container();
-      }
-      return IconButton(
-          onPressed: () {
-            setState(() {
-              selected = DateTime.now();
-            });
-          },
-          icon: const FaIcon(FontAwesomeIcons.backward));
-    }
 
     Widget getYearAndMonth() {
       String textMonth = DateFormat('MMMM', 'ru_RU').format(selected);

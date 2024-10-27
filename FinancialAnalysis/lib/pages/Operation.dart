@@ -211,8 +211,7 @@ class _OperationState extends State<Operation> {
                     subtitle: Text(
                       arr[index]['date'].toString().substring(0, 10),
                       style: const TextStyle(
-                          fontSize: 14,
-                          color: Color.fromARGB(255, 87, 86, 83)),
+                          fontSize: 14, color: Color.fromARGB(255, 87, 86, 83)),
                     ),
                   ),
                 );
