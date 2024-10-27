@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:financial_analysis/data/database.dart';
 import 'package:financial_analysis/data/calendar.dart';
+import 'package:flutter/services.dart';
 
 class AddOperation extends StatefulWidget {
   const AddOperation({super.key});
@@ -23,9 +24,18 @@ class _AddOperationState extends State<AddOperation> {
   DateTime selectedDate = DateTime.now();
   DateTime? firstDate;
   DateTime? secondDate;
+  bool? period;
 
   TextEditingController moneyController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+
+  bool enabled = false;
+
+  void checkFields() {
+    setState(() {
+      enabled = name != '' && money != '' && selectedItem != null;
+    });
+  }
 
   void getModal() {
     showModalBottomSheet(
@@ -56,6 +66,7 @@ class _AddOperationState extends State<AddOperation> {
                 onTap: () {
                   setState(() {
                     selectedItem = item;
+                    checkFields();
                   });
                   Navigator.pop(context);
                 },
@@ -75,7 +86,9 @@ class _AddOperationState extends State<AddOperation> {
             child: Container(
               width: MediaQuery.of(context).size.width * 0.8,
               height: 400,
-              child: Calendar(),
+              child: Calendar(
+                twoDates: false,
+              ),
             ),
           );
         });
@@ -94,6 +107,11 @@ class _AddOperationState extends State<AddOperation> {
     } else {
       return 0;
     }
+  }
+
+  String getText() {
+    List text = selectedDate.toString().substring(0, 10).split('-');
+    return '${text[2]}.${text[1]}.${text[0]}';
   }
 
   @override
@@ -136,6 +154,7 @@ class _AddOperationState extends State<AddOperation> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     firstDate = args['firstDate'];
     secondDate = args['secondDate'];
+    period = args['period'];
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -154,12 +173,15 @@ class _AddOperationState extends State<AddOperation> {
                     'mode': mode,
                     'list': list,
                     'firstDate': firstDate,
-                    'secondDate': secondDate
+                    'secondDate': secondDate,
+                    'period': period
                   });
                 } else {
                   Navigator.pushNamed(context, '/home', arguments: {
                     'firstDate': firstDate,
-                    'secondDate': secondDate
+                    'secondDate': secondDate,
+                    'period': period,
+                    'mode': mode
                   });
                 }
               },
@@ -185,6 +207,7 @@ class _AddOperationState extends State<AddOperation> {
                         onChanged: (value) {
                           setState(() {
                             name = value;
+                            checkFields();
                           });
                         },
                         decoration: InputDecoration(
@@ -201,10 +224,15 @@ class _AddOperationState extends State<AddOperation> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: TextField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter(RegExp(r'\d*'),
+                              allow: true),
+                        ],
                         controller: moneyController,
                         onChanged: (value) {
                           setState(() {
                             money = value;
+                            checkFields();
                           });
                         },
                         decoration: InputDecoration(
@@ -227,8 +255,7 @@ class _AddOperationState extends State<AddOperation> {
                         child: TextField(
                           enabled: false,
                           decoration: InputDecoration(
-                              labelText:
-                                  selectedDate.toString().substring(0, 10),
+                              labelText: getText(),
                               labelStyle: TextStyle(color: Colors.black),
                               border: InputBorder.none),
                         ),
@@ -297,7 +324,13 @@ class _AddOperationState extends State<AddOperation> {
             child: SizedBox(
               width: 300,
               child: FloatingActionButton(
+                backgroundColor: !enabled ? Colors.grey : null,
+                foregroundColor: !enabled ? Colors.white : null,
                 onPressed: () {
+                  if (!enabled) {
+                    return;
+                  }
+
                   if (index == null) {
                     db.operations.add({
                       'id': getId(),
@@ -311,7 +344,9 @@ class _AddOperationState extends State<AddOperation> {
                     db.updateOperations();
                     Navigator.pushNamed(context, '/home', arguments: {
                       'firstDate': firstDate,
-                      'secondDate': secondDate
+                      'secondDate': secondDate,
+                      'period': period,
+                      'mode': mode
                     });
                   } else {
                     db.operations[index!] = {
@@ -336,12 +371,15 @@ class _AddOperationState extends State<AddOperation> {
                         'mode': mode,
                         'list': list,
                         'firstDate': firstDate,
-                        'secondDate': secondDate
+                        'secondDate': secondDate,
+                        'period': period
                       });
                     } else {
                       Navigator.pushNamed(context, '/home', arguments: {
                         'firstDate': firstDate,
-                        'secondDate': secondDate
+                        'secondDate': secondDate,
+                        'period': period,
+                        'mode': mode
                       });
                     }
                   }

@@ -1,3 +1,4 @@
+import 'package:financial_analysis/data/calendar.dart';
 import 'package:financial_analysis/pages/Operation.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -44,6 +45,7 @@ class Financial extends StatefulWidget {
 }
 
 class _FinancialState extends State<Financial> {
+  bool period = false;
   bool isLoading = true;
   DateTime today = DateTime.now();
   DateTime? firstDate;
@@ -65,8 +67,10 @@ class _FinancialState extends State<Financial> {
           .where((item) =>
               item['category'] == db.depositsCategories[i]['name'] &&
               item['mode'] &&
-              item['date'].isAfter(firstDate!) &&
-              item['date'].isBefore(secondDate!))
+              ((item['date'].isAfter(firstDate!) &&
+                      item['date'].isBefore(secondDate!)) ||
+                  item['date'] == firstDate ||
+                  item['date'] == secondDate))
           .toList();
       int sum = 0;
       int count = 0;
@@ -90,8 +94,10 @@ class _FinancialState extends State<Financial> {
           .where((item) =>
               item['category'] == db.expensesCategories[i]['name'] &&
               !item['mode'] &&
-              item['date'].isAfter(firstDate!) &&
-              item['date'].isBefore(secondDate!))
+              ((item['date'].isAfter(firstDate!) &&
+                      item['date'].isBefore(secondDate!)) ||
+                  item['date'] == firstDate ||
+                  item['date'] == secondDate))
           .toList();
       int sum = 0;
       int count = 0;
@@ -137,6 +143,23 @@ class _FinancialState extends State<Financial> {
   }
 
   String getMonthName(DateTime date) {
+    if (period) {
+      int days = (firstDate == secondDate)
+          ? 1
+          : secondDate!.difference(firstDate!).inDays;
+      int lastDigit = days % 10;
+      int lastTwoDigits = days % 100;
+
+      if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+        return "$days дней";
+      } else if (lastDigit == 1) {
+        return "$days день";
+      } else if (lastDigit >= 2 && lastDigit <= 4) {
+        return "$days дня";
+      } else {
+        return "$days дней";
+      }
+    }
     String monthText = DateFormat('MMMM', 'ru_RU').format(date);
     if (date.year < today.year) {
       return monthText[0].toUpperCase() +
@@ -144,6 +167,43 @@ class _FinancialState extends State<Financial> {
           ', ${date.year}';
     }
     return monthText[0].toUpperCase() + monthText.substring(1);
+  }
+
+  String getPeriodText() {
+    List first = firstDate.toString().substring(0, 10).split('-');
+    List second = secondDate.toString().substring(0, 10).split('-');
+    if (firstDate == secondDate) {
+      return '${first[2]}.${first[1]}.${first[0].substring(1, 3)}';
+    }
+    if (firstDate!.year != today.year || secondDate!.year != today.year) {
+      return '${first[2]}.${first[1]}.${first[0].substring(2)} - ${second[2]}.${second[1]}.${second[0].substring(2)}';
+    } else {
+      return '${first[2]}.${first[1]} - ${second[2]}.${second[1]}';
+    }
+  }
+
+  Future getPeriod(BuildContext context) async {
+    Map? dates = await showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 400,
+              child: Calendar(
+                twoDates: true,
+              ),
+            ),
+          );
+        });
+    if (dates != null) {
+      setState(() {
+        firstDate = dates['firstDate'];
+        secondDate = dates['secondDate'];
+        period = true;
+        getSum();
+      });
+    }
   }
 
   @override
@@ -160,10 +220,12 @@ class _FinancialState extends State<Financial> {
         if (args['firstDate'] != null) {
           firstDate = args['firstDate'];
           secondDate = args['secondDate'];
+          period = args['period'];
+          mode = args['mode'];
         }
       }
-      getSum();
       setState(() {
+        getSum();
         isLoading = false;
       });
     });
@@ -277,7 +339,12 @@ class _FinancialState extends State<Financial> {
                                         height: 15,
                                       ),
                                       GestureDetector(
-                                          onTap: () {},
+                                          onTap: () {
+                                            setState(() {
+                                              Navigator.pop(context);
+                                              getPeriod(context);
+                                            });
+                                          },
                                           child: Container(
                                             color: Colors.transparent,
                                             width: double.infinity,
@@ -329,7 +396,9 @@ class _FinancialState extends State<Financial> {
                                                 context, '/Category',
                                                 arguments: {
                                                   'firstDate': firstDate,
-                                                  'secondDate': secondDate
+                                                  'secondDate': secondDate,
+                                                  'period': period,
+                                                  'mode': mode
                                                 });
                                           },
                                           child: Container(
@@ -390,33 +459,77 @@ class _FinancialState extends State<Financial> {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       mode ? dSum.toString() + '₽' : eSum.toString() + '₽',
                       style: TextStyle(fontSize: 20),
-                    )
+                    ),
+                    period
+                        ? SizedBox(
+                            height: 40,
+                            width: firstDate == secondDate
+                                ? 120
+                                : firstDate!.year != today.year ||
+                                        secondDate!.year != today.year
+                                    ? 180
+                                    : 140,
+                            child: Card(
+                              color: const Color.fromARGB(255, 221, 220, 220),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(getPeriodText()),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        firstDate = DateTime(
+                                            today.year, today.month, 1);
+                                        int lastDay = DateUtils.getDaysInMonth(
+                                            today.year, today.month);
+                                        secondDate = DateTime(
+                                            today.year, today.month, lastDay);
+                                        getSum();
+                                        period = false;
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 5),
+                                      child: Icon(Icons.close, size: 17),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        : SizedBox(
+                            height: 40,
+                          )
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                        onPressed: () {
-                          setState(() {
-                            firstDate = DateTime(
-                                firstDate!.year, firstDate!.month - 1, 1);
-                            int lastDay = DateUtils.getDaysInMonth(
-                                firstDate!.year, firstDate!.month);
-                            secondDate = DateTime(secondDate!.year,
-                                secondDate!.month - 1, lastDay);
-                            getSum();
-                          });
-                        },
-                        icon: Icon(Icons.arrow_back)),
+                    !period
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                firstDate = DateTime(
+                                    firstDate!.year, firstDate!.month - 1, 1);
+                                int lastDay = DateUtils.getDaysInMonth(
+                                    firstDate!.year, firstDate!.month);
+                                secondDate = DateTime(secondDate!.year,
+                                    secondDate!.month - 1, lastDay);
+                                getSum();
+                              });
+                            },
+                            child: Icon(Icons.arrow_back),
+                          )
+                        : SizedBox(),
                     Expanded(
                         child: AspectRatio(
-                      aspectRatio: 1,
+                      aspectRatio: period ? 1.15 : 1,
                       child: Container(
                           margin: EdgeInsets.all(10),
                           child: Stack(
@@ -480,9 +593,10 @@ class _FinancialState extends State<Financial> {
                           )),
                     )),
                     DateTime(firstDate!.year, firstDate!.month + 1)
-                            .isBefore(today)
-                        ? IconButton(
-                            onPressed: () {
+                                .isBefore(today) &&
+                            !period
+                        ? GestureDetector(
+                            onTap: () {
                               setState(() {
                                 firstDate = DateTime(
                                     firstDate!.year, firstDate!.month + 1, 1);
@@ -493,9 +607,10 @@ class _FinancialState extends State<Financial> {
                                 getSum();
                               });
                             },
-                            icon: Icon(Icons.arrow_forward))
+                            child: Icon(Icons.arrow_forward),
+                          )
                         : SizedBox(
-                            width: 48,
+                            width: period ? 0 : 24,
                           )
                   ],
                 ),
@@ -513,7 +628,8 @@ class _FinancialState extends State<Financial> {
                                   arguments: {
                                     'mode': mode,
                                     'firstDate': firstDate,
-                                    'secondDate': secondDate
+                                    'secondDate': secondDate,
+                                    'period': period
                                   });
                             }
                           } else {
@@ -522,7 +638,8 @@ class _FinancialState extends State<Financial> {
                                   arguments: {
                                     'mode': mode,
                                     'firstDate': firstDate,
-                                    'secondDate': secondDate
+                                    'secondDate': secondDate,
+                                    'period': period
                                   });
                             }
                           }
@@ -567,7 +684,8 @@ class _FinancialState extends State<Financial> {
                                   'mode': mode,
                                   'list': entry.value['operations'],
                                   'firstDate': firstDate,
-                                  'secondDate': secondDate
+                                  'secondDate': secondDate,
+                                  'period': period
                                 });
                           },
                           child: Container(

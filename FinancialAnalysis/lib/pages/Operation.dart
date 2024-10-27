@@ -16,6 +16,7 @@ class _OperationState extends State<Operation> {
   DataBase db = DataBase();
   bool mode = false;
   List arr = [];
+  bool? period;
   @override
   void initState() {
     db.loadData();
@@ -32,6 +33,7 @@ class _OperationState extends State<Operation> {
       catName = arr[0]['category'];
       firstDate = args['firstDate'];
       secondDate = args['secondDate'];
+      period = args['period'];
     });
     return Scaffold(
       backgroundColor: Colors.white,
@@ -41,7 +43,9 @@ class _OperationState extends State<Operation> {
             onPressed: () {
               Navigator.pushNamed(context, '/home', arguments: {
                 'firstDate': firstDate,
-                'secondDate': secondDate
+                'secondDate': secondDate,
+                'period': period,
+                'mode': mode
               });
             },
             icon: Icon(Icons.arrow_back)),
@@ -95,7 +99,8 @@ class _OperationState extends State<Operation> {
                                                   'category': arr[index]
                                                       ['category'],
                                                   'firstDate': firstDate,
-                                                  'secondDate': secondDate
+                                                  'secondDate': secondDate,
+                                                  'period': period
                                                 });
                                           },
                                           child: Container(
@@ -144,13 +149,16 @@ class _OperationState extends State<Operation> {
                                                   'mode': mode,
                                                   'list': list,
                                                   'firstDate': firstDate,
-                                                  'secondDate': secondDate
+                                                  'secondDate': secondDate,
+                                                  'period': period
                                                 });
                                           } else {
                                             Navigator.pushNamed(
                                                 context, '/home', arguments: {
                                               'firstDate': firstDate,
-                                              'secondDate': secondDate
+                                              'secondDate': secondDate,
+                                              'period': period,
+                                              'mode': mode
                                             });
                                           }
                                         },

@@ -14,10 +14,19 @@ class _CategoryState extends State<Category> {
   List categories = [];
   DateTime? firstDate;
   DateTime? secondDate;
+  bool? period;
 
   @override
   void initState() {
     db.loadData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args =
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      setState(() {
+        mode = args['mode'];
+      });
+    });
+
     super.initState();
   }
 
@@ -27,6 +36,7 @@ class _CategoryState extends State<Category> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     firstDate = args['firstDate'];
     secondDate = args['secondDate'];
+    period = args['period'];
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -45,7 +55,9 @@ class _CategoryState extends State<Category> {
                         onPressed: () {
                           Navigator.pushNamed(context, '/home', arguments: {
                             'firstDate': firstDate,
-                            'secondDate': secondDate
+                            'secondDate': secondDate,
+                            'period': period,
+                            'mode': mode
                           });
                         },
                         icon: Icon(Icons.arrow_back)),
@@ -140,7 +152,8 @@ class _CategoryState extends State<Category> {
                                                   'mode': mode,
                                                   'index': index,
                                                   'firstDate': firstDate,
-                                                  'secondDate': secondDate
+                                                  'secondDate': secondDate,
+                                                  'period': period
                                                 });
                                           },
                                           child: Container(
@@ -199,7 +212,9 @@ class _CategoryState extends State<Category> {
                                           Navigator.pushNamed(
                                               context, '/Category', arguments: {
                                             'firstDate': firstDate,
-                                            'secondDate': secondDate
+                                            'secondDate': secondDate,
+                                            'period': period,
+                                            'mode': mode
                                           });
                                         },
                                         child: Container(
@@ -258,7 +273,8 @@ class _CategoryState extends State<Category> {
                   Navigator.pushNamed(context, '/addCategory', arguments: {
                     'mode': mode,
                     'firstDate': firstDate,
-                    'secondDate': secondDate
+                    'secondDate': secondDate,
+                    'period': period
                   });
                 },
                 child: Text(

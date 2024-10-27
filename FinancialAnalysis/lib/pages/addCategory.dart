@@ -12,11 +12,13 @@ class AddCategory extends StatefulWidget {
 class _AddCategoryState extends State<AddCategory> {
   DateTime? firstDate;
   DateTime? secondDate;
+  bool? period;
   bool? mode;
   int? index;
   DataBase db = DataBase();
   String name = '';
   final TextEditingController controller = TextEditingController();
+  bool enabled = false;
 
   Color generateColor() {
     final random = Random();
@@ -26,6 +28,53 @@ class _AddCategoryState extends State<AddCategory> {
       200 + random.nextInt(56),
       200 + random.nextInt(56),
     );
+  }
+
+  void checkField() {
+    setState(() {
+      enabled = name != '';
+    });
+  }
+
+  void getDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 100,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 8, right: 8),
+                    child: Align(
+                        alignment: Alignment.topRight,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(
+                            Icons.close,
+                            size: 24,
+                          ),
+                        )),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Название категории уже занято',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -41,6 +90,7 @@ class _AddCategoryState extends State<AddCategory> {
           name = mode!
               ? db.depositsCategories[index!]['name']
               : db.expensesCategories[index!]['name'];
+          checkField();
           controller.text = name;
         }
       });
@@ -54,6 +104,7 @@ class _AddCategoryState extends State<AddCategory> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     firstDate = args['firstDate'];
     secondDate = args['secondDate'];
+    period = args['period'];
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -63,12 +114,16 @@ class _AddCategoryState extends State<AddCategory> {
                 if (index != null) {
                   Navigator.pushNamed(context, '/Category', arguments: {
                     'firstDate': firstDate,
-                    'secondDate': secondDate
+                    'secondDate': secondDate,
+                    'period': period,
+                    'mode': mode
                   });
                 } else {
                   Navigator.pushNamed(context, '/home', arguments: {
                     'firstDate': firstDate,
-                    'secondDate': secondDate
+                    'secondDate': secondDate,
+                    'period': period,
+                    'mode': mode
                   });
                 }
               },
@@ -91,6 +146,7 @@ class _AddCategoryState extends State<AddCategory> {
                         onChanged: (value) {
                           setState(() {
                             name = value;
+                            checkField();
                           });
                         },
                         decoration: InputDecoration(
@@ -109,11 +165,24 @@ class _AddCategoryState extends State<AddCategory> {
             child: SizedBox(
               width: 300,
               child: FloatingActionButton(
+                backgroundColor: !enabled ? Colors.grey : null,
+                foregroundColor: !enabled ? Colors.white : null,
                 onPressed: () {
+                  if (!enabled) {
+                    return;
+                  }
+
                   List tmp = db.operations;
 
                   if (index != null) {
                     if (mode!) {
+                      int count = db.depositsCategories
+                          .where((item) => item['name'] == name)
+                          .length;
+                      if (count > 1) {
+                        getDialog();
+                        return;
+                      }
                       tmp
                           .where((operation) =>
                               operation['category'] ==
@@ -124,6 +193,13 @@ class _AddCategoryState extends State<AddCategory> {
                       });
                       db.depositsCategories[index!]['name'] = name;
                     } else {
+                      int count = db.expensesCategories
+                          .where((item) => item['name'] == name)
+                          .length;
+                      if (count > 1) {
+                        getDialog();
+                        return;
+                      }
                       tmp
                           .where((operation) =>
                               operation['category'] ==
@@ -138,17 +214,33 @@ class _AddCategoryState extends State<AddCategory> {
                     db.updateCategory();
                     db.updateOperations();
                   } else {
-                    mode!
-                        ? db.depositsCategories
-                            .add({'name': name, 'color': generateColor().value})
-                        : db.expensesCategories.add(
+                    if (mode!) {
+                      if (!db.depositsCategories
+                          .any((item) => item['name'] == name)) {
+                        db.depositsCategories.add(
                             {'name': name, 'color': generateColor().value});
+                      } else {
+                        getDialog();
+                        return;
+                      }
+                    } else {
+                      if (!db.expensesCategories
+                          .any((item) => item['name'] == name)) {
+                        db.expensesCategories.add(
+                            {'name': name, 'color': generateColor().value});
+                      } else {
+                        getDialog();
+                        return;
+                      }
+                    }
                     db.updateCategory();
                   }
 
                   Navigator.pushNamed(context, '/Category', arguments: {
                     'firstDate': firstDate,
-                    'secondDate': secondDate
+                    'secondDate': secondDate,
+                    'period': period,
+                    'mode': mode
                   });
                 },
                 child: Text(

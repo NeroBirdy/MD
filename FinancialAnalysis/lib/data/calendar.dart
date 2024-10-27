@@ -3,7 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({super.key});
+  final bool twoDates;
+
+  const Calendar({super.key, required this.twoDates});
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -12,7 +14,12 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   DateTime today = DateTime.now();
   DateTime selected = DateTime.now();
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime firstDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime secondDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  bool firstOrSecond = false;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +76,7 @@ class _CalendarState extends State<Calendar> {
               )
             ],
           ),
-          (selected.year == today.year && selected.month + 1 <= today.month)
+          (DateTime(selected.year, selected.month + 1).isBefore(today))
               ? IconButton(
                   onPressed: () {
                     setState(() {
@@ -101,10 +108,25 @@ class _CalendarState extends State<Calendar> {
     }
 
     Color getColor(int day, DateTime date) {
+      if (((date.year == firstDate.year &&
+                  date.month == firstDate.month &&
+                  day == firstDate.day) ||
+              (date.year == secondDate.year &&
+                  date.month == secondDate.month &&
+                  day == secondDate.day)) &&
+          widget.twoDates) {
+        return const Color.fromARGB(255, 73, 138, 76);
+      }
+      if ((DateTime(date.year, date.month, day).isAfter(firstDate) &&
+              DateTime(date.year, date.month, day).isBefore(secondDate)) &&
+          widget.twoDates) {
+        return const Color.fromARGB(162, 78, 187, 84);
+      }
       if (date.year == selectedDate.year &&
           date.month == selectedDate.month &&
-          day == selectedDate.day) {
-        return const Color.fromARGB(255, 100, 207, 105);
+          day == selectedDate.day &&
+          !widget.twoDates) {
+        return const Color.fromARGB(255, 73, 138, 76);
       }
       if (date.year == today.year &&
           date.month == today.month &&
@@ -122,10 +144,32 @@ class _CalendarState extends State<Calendar> {
       return GestureDetector(
         onTap: () {
           setState(() {
-            if (selected.year <= today.year &&
-                selected.month <= today.month &&
-                day <= today.day) {
-              selectedDate = DateTime(selected.year, selected.month, day);
+            if (DateTime(selected.year, selected.month, day).isBefore(today)) {
+              if (widget.twoDates) {
+                if (firstOrSecond) {
+                  if (DateTime(selected.year, selected.month, day) ==
+                      firstDate) {
+                    secondDate = DateTime(selected.year, selected.month, day);
+                  } else {
+                    firstDate = DateTime(selected.year, selected.month, day);
+                  }
+                } else {
+                  if (DateTime(selected.year, selected.month, day) ==
+                      secondDate) {
+                    firstDate = DateTime(selected.year, selected.month, day);
+                  } else {
+                    secondDate = DateTime(selected.year, selected.month, day);
+                  }
+                }
+                if (firstDate.isAfter(secondDate) && firstDate != secondDate) {
+                  DateTime tmp = firstDate;
+                  firstDate = secondDate;
+                  secondDate = tmp;
+                }
+                firstOrSecond = !firstOrSecond;
+              } else {
+                selectedDate = DateTime(selected.year, selected.month, day);
+              }
             }
           });
         },
@@ -185,12 +229,17 @@ class _CalendarState extends State<Calendar> {
             children: [
               TextButton(
                   onPressed: () {
-                    Navigator.pop(context, DateTime.now());
+                    Navigator.pop(context);
                   },
                   child: Text('Отмена')),
               TextButton(
                   onPressed: () {
-                    Navigator.pop(context, selectedDate);
+                    if (widget.twoDates) {
+                      Navigator.pop(context,
+                          {'firstDate': firstDate, 'secondDate': secondDate});
+                    } else {
+                      Navigator.pop(context, selectedDate);
+                    }
                   },
                   child: Text('Ок'))
             ],
