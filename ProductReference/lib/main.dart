@@ -9,9 +9,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
-    url: 'https://crbspbdlxhqxfbkhzlbm.supabase.co',
+    url: 'https://lqptdmcnveiphokgxwfm.supabase.co',
     anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNyYnNwYmRseGhxeGZia2h6bGJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg4NzQ4ODcsImV4cCI6MjA0NDQ1MDg4N30.Vt3UK-EgFme81aYCMigz3_3P56Qs2KGfoGDUYoi1iQs',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxcHRkbWNudmVpcGhva2d4d2ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMjcxMzAsImV4cCI6MjA0NDgwMzEzMH0.GJ5IDbQYl57-af_1Vlf5fOw2qPezR54q4GvGEKFpGug',
   );
 
   await Hive.initFlutter();
@@ -174,7 +174,8 @@ class _ProductListState extends State<ProductList> {
                                           right: 110,
                                           child: Text(
                                             '${values['list'][index]['calories'].toString()} Ккал',
-                                            style: const TextStyle(fontSize: 16),
+                                            style:
+                                                const TextStyle(fontSize: 16),
                                           )),
                                       Positioned(
                                           right: 25,
